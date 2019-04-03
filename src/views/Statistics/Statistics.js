@@ -4,10 +4,10 @@ import { Card, CardBody, CardColumns, CardHeader } from 'reactstrap';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 
 const line = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
   datasets: [
     {
-      label: 'My First dataset',
+      label: 'Work progress',
       fill: false,
       lineTension: 0.1,
       backgroundColor: 'rgba(75,192,192,0.4)',
@@ -25,22 +25,22 @@ const line = {
       pointHoverBorderWidth: 2,
       pointRadius: 1,
       pointHitRadius: 10,
-      data: [65, 59, 80, 81, 56, 55, 40],
+      data: [65, 59, 80, 75, 56, 55, 30],
     },
   ],
 };
 
 const bar = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
   datasets: [
     {
-      label: 'My First dataset',
+      label: 'Issue creation  dataset',
       backgroundColor: 'rgba(255,99,132,0.2)',
       borderColor: 'rgba(255,99,132,1)',
       borderWidth: 1,
       hoverBackgroundColor: 'rgba(255,99,132,0.4)',
       hoverBorderColor: 'rgba(255,99,132,1)',
-      data: [65, 59, 80, 81, 56, 55, 40],
+      data: [10, 25, 12, 35, 45, 55, 0],
     },
   ],
 };
@@ -95,13 +95,13 @@ const radar = {
 
 const pie = {
   labels: [
-    'Red',
-    'Green',
-    'Yellow',
+    'Solved Issue',
+    'In progress',
+    'Not solved',
   ],
   datasets: [
     {
-      data: [300, 50, 100],
+      data: [65, 10, 25],
       backgroundColor: [
         '#FF6384',
         '#36A2EB',
@@ -135,11 +135,11 @@ const polar = {
       label: 'My dataset' // for legend
     }],
   labels: [
-    'Red',
-    'Green',
-    'Yellow',
-    'Grey',
-    'Blue',
+    '5days',
+    '6days',
+    '3days',
+    '2days',
+    '1day',
   ],
 };
 
@@ -158,7 +158,7 @@ class Statistics extends Component {
         <CardColumns className="cols-2">
           <Card>
             <CardHeader>
-              Line Chart
+              Work progress
               <div className="card-header-actions">
                 <a href="http://www.chartjs.org" className="card-header-action">
                   <small className="text-muted">docs</small>
@@ -173,7 +173,7 @@ class Statistics extends Component {
           </Card>
           <Card>
             <CardHeader>
-              Bar Chart
+              Issue Chart
               <div className="card-header-actions">
                 <a href="http://www.chartjs.org" className="card-header-action">
                   <small className="text-muted">docs</small>
@@ -186,27 +186,13 @@ class Statistics extends Component {
               </div>
             </CardBody>
           </Card>
+
           <Card>
             <CardHeader>
-              Doughnut Chart
+              Issues chart
               <div className="card-header-actions">
                 <a href="http://www.chartjs.org" className="card-header-action">
-                  <small className="text-muted">docs</small>
-                </a>
-              </div>
-            </CardHeader>
-            <CardBody>
-              <div className="chart-wrapper">
-                <Doughnut data={doughnut} />
-              </div>
-            </CardBody>
-          </Card>
-          <Card>
-            <CardHeader>
-              Pie Chart
-              <div className="card-header-actions">
-                <a href="http://www.chartjs.org" className="card-header-action">
-                  <small className="text-muted">docs</small>
+                  <small className="text-muted">issues</small>
                 </a>
               </div>
             </CardHeader>
@@ -218,10 +204,10 @@ class Statistics extends Component {
           </Card>
           <Card>
             <CardHeader>
-              Polar Area Chart
+              Aveareg solving issue time
               <div className="card-header-actions">
                 <a href="http://www.chartjs.org" className="card-header-action">
-                  <small className="text-muted">docs</small>
+                  <small className="text-muted">time</small>
                 </a>
               </div>
             </CardHeader>

@@ -1,0 +1,7 @@
+{
+    "name": "AllReleases",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./AllReleases.js"
+  }
+  

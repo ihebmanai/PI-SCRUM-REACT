@@ -42,6 +42,7 @@ const CurrentProject = React.lazy(() => import('./views/Projects/CurrentProject'
 const BacklogProject = React.lazy(() => import('./views/Projects/BacklogProject'));
 const DragDrop = React.lazy(() => import('./views/Projects/DragDrop'));
 const Statistics = React.lazy(() => import('./views/Statistics/Statistics'));
+const AllReleases = React.lazy(() => import('./views/Projects/AllReleases'));
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
@@ -89,9 +90,9 @@ const routes = [
   { path: '/projects/addProject', exact: true, name: 'Add Project', component: AddProject},
   { path: '/projects/currentProject', exact: true, name: 'Current Project', component: CurrentProject},
   { path: '/projects/BacklogProject', exact: true, name: 'Backlog Project', component: BacklogProject},
-  
   { path: '/projects/DragDrop', exact: true, name: 'drag drop', component: DragDrop},
-  { path: '/statistics', exact: true, name: 'statistics', component: Statistics}
+  { path: '/statistics', exact: true, name: 'statistics', component: Statistics},
+  { path: '/projects/AllReleases', exact: true, name: 'all releases', component: AllReleases}
 ];
 
 export default routes;
