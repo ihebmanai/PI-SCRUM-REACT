@@ -5,13 +5,12 @@ export default {
       url: '/dashboard',
       icon: 'icon-speedometer',
       badge: {
-        variant: 'info',
-        text: 'NEW',
+        variant: 'info'
       },
     },
     {
       title: true,
-      name: 'Theme',
+      name: 'SCRUM Project Managment',
       wrapper: {            // optional wrapper object
         element: '',        // required valid HTML5 element tag
         attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
@@ -19,14 +18,56 @@ export default {
       class: ''             // optional class names space delimited list for title item ex: "text-center"
     },
     {
-      name: 'Colors',
+      name: 'Projects',
       url: '/theme/colors',
-      icon: 'icon-drop',
+      icon: 'icon-film',
+      children: [
+        {
+          name: 'Add project',
+          url: '/Projects/AddProject',
+          icon: 'icon-pencil',
+        },
+        {
+          name: 'Current Project',
+          url: '/Projects/CurrentProject',
+          icon: 'icon-clock',
+        },
+        {
+          name: 'All Projects',
+          url: '/Projects/ProjectList',
+          icon: 'icon-grid',
+        }]
     },
     {
-      name: 'Typography',
-      url: '/theme/typography',
-      icon: 'icon-pencil',
+      name: 'Backlog',
+      url: '/Projects/BacklogProject',
+      icon: 'icon-list',
+    },
+    {
+      name: 'Releases',
+      url: '/Projects/DragDrop',
+      icon: 'icon-layers',
+      children: [
+        {
+          name: 'Current Release',
+          url:'/Projects/DragDrop',
+          icon: 'icon-clock',
+        },
+        {
+          name: 'Releases Planning',
+          url: '/base/cards',
+          icon: 'icon-layers',
+        }]
+    },
+    {
+      name: 'Issues',
+      url: '/theme/colors',
+      icon: 'icon-wrench',
+    },
+    {
+      name: 'Statistics',
+      url: '/Statistics',
+      icon: 'icon-graph',
     },
     {
       title: true,
