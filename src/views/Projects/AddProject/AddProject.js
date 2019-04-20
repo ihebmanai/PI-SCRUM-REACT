@@ -38,7 +38,10 @@ class AddProject extends Component {
       collapse: true,
       fadeIn: true,
       timeout: 300,
+      smasters:[],
       projectName: '',
+      startingDate:'',
+      endDate:'',
       key:'',
       status:'not started',
       description:'',
@@ -66,7 +69,17 @@ class AddProject extends Component {
     })
 }
 
-  
+componentDidMount() {
+  axios.get("http://localhost:3000/user")
+    .then((response) => {
+      console.log(response)
+      let sc = response.data.map(smaster => { return {value: smaster._id, display: smaster.firstName + " "+smaster.lastName} })
+      this.setState({ smasters: [{value: '', display: '(Select scrum master)'}].concat(sc) });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
   onSubmit(p) {
     p.preventDefault() 
     const data = this.state
@@ -76,7 +89,9 @@ class AddProject extends Component {
       key:this.state.key,
       status:this.state.status,
       description:this.state.description,
-      scrumMaster:this.state.scrumMaster
+      scrumMaster:this.state.scrumMaster,
+      startingDate:this.state.startingDate,
+      endDate:this.state.endDate
     })
     .then(function (response) {
       console.log(response);
@@ -134,14 +149,14 @@ class AddProject extends Component {
                                                    onChange={this.onChange} />
                     </InputGroup>
                 </FormGroup>
-               { /*} <FormGroup row className="my-0">
+               <FormGroup row className="my-0">
                   <Col xs="6">
                   <FormGroup>
                   <InputGroup>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>Starting date</InputGroupText>
                       </InputGroupAddon>
-                      <Input type="Date" id="startingDate" name="startingDate" value={this.state.project.startingDate}
+                      <Input type="Date" id="startingDate" name="startingDate" value={this.state.startingDate}
                                                    onChange={this.onChange} />
                     </InputGroup>
                     </FormGroup>
@@ -152,13 +167,22 @@ class AddProject extends Component {
                   <InputGroupAddon addonType="prepend">
                         <InputGroupText>End date</InputGroupText>
                       </InputGroupAddon>
-                      <Input type="Date" id="endDate" name="endDate" value={this.state.project.endDate}
+                      <Input type="Date" id="endDate" name="endDate" value={this.state.endDate}
                                                    onChange={this.onChange}/>
                     </InputGroup>
                 </FormGroup>
                   </Col>
                 </FormGroup>
-               */}
+            
+                <FormGroup>
+                <Label htmlFor="ccmonth">Scrum Master</Label>
+                <Input type="select" name="scrumMaster" id="scrumMaster" 
+                value={this.state.scrumMaster} 
+              onChange={(e) => this.setState({scrumMaster: e.target.value})}>
+                {this.state.smasters.map((sc) => <option key={sc.value} value={sc.value}>{sc.display}</option>)}
+                </Input>
+              </FormGroup>
+               {/*}
                 <FormGroup>
                 <InputGroup>
                       <InputGroupAddon addonType="prepend">
@@ -168,7 +192,7 @@ class AddProject extends Component {
                                                    onChange={this.onChange} />
                     </InputGroup>
                 </FormGroup>
-              
+             {} */ }
               </CardBody>
               <CardFooter style={{display: 'flex', justifyContent: 'center'}}>
                 <Button  type="submit" size="m" color="primary"><i className="fa fa-dot-circle-o"></i> Add Project</Button>
