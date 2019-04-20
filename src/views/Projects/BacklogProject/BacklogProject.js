@@ -9,10 +9,10 @@ class BacklogProject extends Component {
     this.state = {
       ID:'',
       userStories:[{
-      id:'',
+      _id:'',
       userStory:'',
       priority:'',
-      timeEstimation:''
+      timeestimation:''
       }]
       
     }
@@ -50,10 +50,13 @@ componentDidMount() {
   var self = this;
   axios.get("http://localhost:3000/project/getBacklog/5cbad555e7622d2ab4868c60")
     .then((response) => {
+      console.log(response.data[0]);
       self.setState({
-          userStories:response.data[0].userStories,
+          userStories:response.data[0].userstories,
           ID:response.data[0]._id,
       })
+      console.log(this.state.ID);
+      console.log(this.state.userStories);
     })
     .catch(error => {
       console.log(error);
@@ -76,34 +79,33 @@ componentDidMount() {
                 <Table hover bordered striped responsive size="sm">
                   <thead>
                   <tr>
-                    <th>ID</th>
                     <th>User Stroy</th>
                     <th>Priority</th>
                     <th>Time Estimation</th>
                     <th></th>
                     <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                  <tr>
-                  {this.state.userStories.map((us) => {
-                return (
-                    <div>
-                    <td>{us._id}</td>
-                    <td>{us.priority}</td>
-                    <td>{us.userStory}</td>
-                    <td>1</td>
-                    <td><Button block color="primary">Edit</Button></td>
-                    <td> <Button block color="danger">Delete</Button></td>
-                    </div>
-                )
-            })}
-                  
-                  </tr>
-                  </tbody>
-                   
                     
-                 
+                  </tr>
+                  </thead>
+                  <tbody>
+                  
+                    {
+                      this.state.userStories.map((userstory,index) => {
+            return (
+            
+              <tr key={index}>
+              <td hidden>{userstory._id}</td>
+              <td>{userstory.userStory}</td>
+              <td>{userstory.priority}</td>
+              <td>{userstory.timeestimation}</td>
+              <td><Button block color="primary">Edit</Button></td>
+                    <td> <Button block color="danger">Delete</Button></td>
+              </tr>
+            );
+          })
+                    }
+                    
+                    </tbody>
                 </Table>
                 <nav>
                   <Pagination>
