@@ -2,33 +2,9 @@ import React, { Component } from 'react';
 import { Bar, Doughnut, Line, Pie, Polar, Radar } from 'react-chartjs-2';
 import { Card, CardBody, CardColumns, CardHeader } from 'reactstrap';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
+import axios from "axios";
+var si
 
-const line = {
-  labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-  datasets: [
-    {
-      label: 'Work progress',
-      fill: false,
-      lineTension: 0.1,
-      backgroundColor: 'rgba(75,192,192,0.4)',
-      borderColor: 'rgba(75,192,192,1)',
-      borderCapStyle: 'butt',
-      borderDash: [],
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'miter',
-      pointBorderColor: 'rgba(75,192,192,1)',
-      pointBackgroundColor: '#fff',
-      pointBorderWidth: 1,
-      pointHoverRadius: 5,
-      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-      pointHoverBorderColor: 'rgba(220,220,220,1)',
-      pointHoverBorderWidth: 2,
-      pointRadius: 1,
-      pointHitRadius: 10,
-      data: [65, 59, 80, 75, 56, 55, 30],
-    },
-  ],
-};
 
 const bar = {
   labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -93,27 +69,7 @@ const radar = {
   ],
 };
 
-const pie = {
-  labels: [
-    'Solved Issue',
-    'In progress',
-    'Not solved',
-  ],
-  datasets: [
-    {
-      data: [65, 10, 25],
-      backgroundColor: [
-        '#FF6384',
-        '#36A2EB',
-        '#FFCE56',
-      ],
-      hoverBackgroundColor: [
-        '#FF6384',
-        '#36A2EB',
-        '#FFCE56',
-      ],
-    }],
-};
+
 
 const polar = {
   datasets: [
@@ -152,13 +108,118 @@ const options = {
 }
 
 class Statistics extends Component {
+  constructor(){
+    super()
+    this.state={ solvedIssues:Number , pie:{},line:{}
+  }
+    
+  }
+  componentDidMount(){
+    let today = new Date();
+    let date1=today.getFullYear() + "-0"+parseInt(today.getMonth()+1)+"-"+ parseInt(today.getDate())
+ 
+    let date2=today.getFullYear() + "-0"+parseInt(today.getMonth()+1)+"-"+ parseInt(today.getDate()-1)
+    console.log("d2"+date1)
+    let date3=today.getFullYear() + "-0"+parseInt(today.getMonth()+1)+"-"+ parseInt(today.getDate()-2)
+    let date4=today.getFullYear() + "-0"+parseInt(today.getMonth()+1)+"-"+ parseInt(today.getDate()-3)
+    let date5=today.getFullYear() + "-0"+parseInt(today.getMonth()+1)+"-"+ parseInt(today.getDate()-4) 
+    let date6=today.getFullYear() + "-0"+parseInt(today.getMonth()+1)+"-"+ parseInt(today.getDate()-5) 
+   Promise.all([
+      axios
+      .get("http://localhost:3000/issue?status=solved",{method:"no-cors"}),
+      axios
+      .get("http://localhost:3000/issue?status=in progress",{method:"no-cors"}),
+      axios
+      .get("http://localhost:3000/issue?status=not solved",{method:"no-cors"}),
+      axios
+      .get("http://localhost:3000/issue/date?createdDate="+date6,{method:"no-cors"}),
+      axios
+      .get("http://localhost:3000/issue/date?createdDate="+date5,{method:"no-cors"}),
+      axios
+      .get("http://localhost:3000/issue/date?createdDate="+date4,{method:"no-cors"}),
+      axios
+      .get("http://localhost:3000/issue/date?createdDate="+date3,{method:"no-cors"}),
+      axios
+      .get("http://localhost:3000/issue/date?createdDate="+date2,{method:"no-cors"}),
+      axios
+      .get("http://localhost:3000/issue/date?createdDate="+date1,{method:"no-cors"})
+    
+    
+    ])
+      .then(([response,response2,response3,response4,responsed2,responsed3,responsed4,responsed5,responsed6]) => {
+        console.log("hiiii 1 "+response4.data)
+        console.log("hiiii 2 "+responsed2.data)
+        console.log("hiiii 3 "+responsed3.data)
+        console.log("hiiii 4 "+responsed4.data)
+        console.log("hiiii 5 "+responsed5.data)
+        console.log("hiiii 6 "+responsed6.data)
+
+        this.setState({solvedIssues:response.data})
+        this.setState({pie : {
+          labels: [
+            'Solved Issue',
+            'In progress',
+            'Not solved',
+          ],
+          datasets: [
+            {
+              data: [response.data,response2.data,response3.data],
+              backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+              ],
+              hoverBackgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+              ],
+            }],
+           
+        }})
+        this.setState({line : {
+          labels: [date6, date5, date4,date3, date2, date1],
+          datasets: [
+            {
+              label: 'Issues number',
+              fill: false,
+              lineTension: 0,
+              backgroundColor: 'rgba(75,192,192,0.4)',
+              borderColor: 'rgba(75,192,192,1)',
+              borderCapStyle: 'butt',
+              borderDash: [],
+              borderDashOffset: 0,
+              borderJoinStyle: 'miter',
+              pointBorderColor: 'rgba(75,192,192,1)',
+              pointBackgroundColor: '#fff',
+              pointBorderWidth: 1,
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+              pointHoverBorderColor: 'rgba(220,220,220,1)',
+              pointHoverBorderWidth: 2,
+              pointRadius: 1,
+              pointHitRadius: 10,
+              data: [response4.data,responsed2.data, responsed3.data, responsed4.data, responsed5.data,responsed6.data],
+            }
+          ],
+        }})
+       
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    
+   
+   
+  }
   render() {
+  
     return (
       <div className="animated fadeIn">
         <CardColumns className="cols-2">
           <Card>
             <CardHeader>
-              Work progress
+              Issues created this week
               <div className="card-header-actions">
                 <a href="http://www.chartjs.org" className="card-header-action">
                   <small className="text-muted">docs</small>
@@ -167,7 +228,7 @@ class Statistics extends Component {
             </CardHeader>
             <CardBody>
               <div className="chart-wrapper">
-                <Line data={line} options={options} />
+                <Line data={this.state.line} options={options} />
               </div>
             </CardBody>
           </Card>
@@ -198,7 +259,7 @@ class Statistics extends Component {
             </CardHeader>
             <CardBody>
               <div className="chart-wrapper">
-                <Pie data={pie} />
+                <Pie data={this.state.pie} />
               </div>
             </CardBody>
           </Card>

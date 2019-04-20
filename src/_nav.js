@@ -60,11 +60,6 @@ export default {
         }]
     },
     {
-      name: 'Issues',
-      url: '/theme/colors',
-      icon: 'icon-wrench',
-    },
-    {
       name: 'Statistics',
       url: '/Statistics',
       icon: 'icon-graph',
