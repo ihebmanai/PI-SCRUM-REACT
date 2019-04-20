@@ -38,15 +38,12 @@ class AddProject extends Component {
       collapse: true,
       fadeIn: true,
       timeout: 300,
-      project :{
-        "projectName": "",
-        "key":"",
-        "startingDate": "2019-04-18",
-        "endDate": "2019-04-31",
-        "status":"not started",
-        "description":"",
-        "scrumMaster":""
-      }
+      projectName: '',
+      key:'',
+      status:'not started',
+      description:'',
+      scrumMaster:''
+      
     };
   }
 
@@ -58,24 +55,37 @@ class AddProject extends Component {
     this.setState((prevState) => { return { fadeIn: !prevState }});
   }
 
-  onChange(e) {
+  onChange(event) {
+    event.preventDefault() 
+    console.log(event)
+    console.log(event.target.name)
+    console.log(event.target.value)
     this.setState({
-        
-       project:e.target.value
-        
+      [event.target.name] : event.target.value,
+     
     })
 }
 
   
   onSubmit(p) {
-    p.preventDefault();
-
-    const {project} = this.state.project
-    axios.post('http://localhost:3000/project/add/5c950997c8fc1f2d846c17e2',project)
-    .then(function(response){
-      console.log(response);   
-      console.log("ppp"+project)
-  })
+    p.preventDefault() 
+    const data = this.state
+    console.log(data)
+    axios.post('http://localhost:3000/project/add/5cbacf5e75c4bc1df0a5bf6e',{
+      projectName: this.state.projectName,
+      key:this.state.key,
+      status:this.state.status,
+      description:this.state.description,
+      scrumMaster:this.state.scrumMaster
+    })
+    .then(function (response) {
+      console.log(response);
+      if (response.status === 201) {
+        
+        console.log('project added')
+        alert('project added')
+      }
+    })
     .catch(function(error){
       console.log(error);
     });
@@ -102,7 +112,7 @@ class AddProject extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>Project Name</InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" id="projectName" name="projectName" value={this.state.project.projectName}
+                      <Input type="text" id="projectName" name="projectName" value={this.state.projectName}
                                                    onChange={this.onChange}/>
                     </InputGroup>
                 </FormGroup>
@@ -111,7 +121,7 @@ class AddProject extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>Key</InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" id="key" name="key" value={this.state.project.key}
+                      <Input type="text" id="key" name="key" value={this.state.key}
                                                    onChange={this.onChange}/>
                     </InputGroup>
                 </FormGroup>
@@ -120,7 +130,7 @@ class AddProject extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>Description</InputGroupText>
                       </InputGroupAddon>
-                      <Input type="textarea" id="description" name="description" value={this.state.project.description}
+                      <Input type="textarea" id="description" name="description" value={this.state.description}
                                                    onChange={this.onChange} />
                     </InputGroup>
                 </FormGroup>
@@ -154,7 +164,7 @@ class AddProject extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>Scrum Master </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" id="scrumMaster" name="scrumMaster" value={this.state.project.scrumMaster}
+                      <Input type="text" id="scrumMaster" name="scrumMaster" value={this.state.scrumMaster}
                                                    onChange={this.onChange} />
                     </InputGroup>
                 </FormGroup>
