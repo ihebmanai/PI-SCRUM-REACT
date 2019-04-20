@@ -54,6 +54,7 @@ class DragDrop extends React.Component {
     
     allowDrop = ev =>{
         ev.preventDefault();
+        
     }
     
     onDropLeft = e =>{

@@ -74,7 +74,7 @@ componentDidMount() {
     .then((response) => {
       console.log(response)
       let sc = response.data.map(smaster => { return {value: smaster._id, display: smaster.firstName + " "+smaster.lastName} })
-      this.setState({ smasters: [{value: '', display: '(Select scrum master)'}].concat(sc) });
+      this.setState({ smasters: [{value: '', display: 'Select scrum master'}].concat(sc) });
     })
     .catch(error => {
       console.log(error);
@@ -169,13 +169,13 @@ componentDidMount() {
                       </InputGroupAddon>
                       <Input type="Date" id="endDate" name="endDate" value={this.state.endDate}
                                                    onChange={this.onChange}/>
-                    </InputGroup>
+                    </InputGroup> 
                 </FormGroup>
                   </Col>
                 </FormGroup>
             
                 <FormGroup>
-                <Label htmlFor="ccmonth">Scrum Master</Label>
+                <InputGroupText>Scrum Master</InputGroupText>
                 <Input type="select" name="scrumMaster" id="scrumMaster" 
                 value={this.state.scrumMaster} 
               onChange={(e) => this.setState({scrumMaster: e.target.value})}>
