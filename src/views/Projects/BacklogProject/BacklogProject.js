@@ -18,16 +18,17 @@ class BacklogProject extends Component {
       
     }
   }
-  onChange(event) {
-    event.preventDefault() 
-    console.log(event)
-    console.log(event.target.name)
-    console.log(event.target.value)
-    this.setState({
-      [event.target.name] : event.target.value,
-     
-    })
-}
+
+    onChange = idx => e => {
+      const { name, value } = e.target;
+      const userStories = [...this.state.userStories];
+      userStories[idx] = {
+        [name]: value
+      };
+      this.setState({
+        userStories
+      });
+    }
 onSubmit(p) {
   p.preventDefault() 
   const data = this.state
@@ -36,15 +37,14 @@ onSubmit(p) {
   this.setState({
   })
 }
-handleUpdateSpecificRow = (idx) => () => {
-  console.log("iii"+idx)
-  console.log("iiiiiii"+ this.state.userStories)
-  const userStories = [...this.state.userStories]
-
-  this.setState({ userStories })
-  axios.put("http://localhost:3000/backlogProject/updateUserStory/5cbc4de40942e908ec256b88/"+idx,{
-    priority: this.state.userStories.priority,
-    timeestimation:this.state.userStories.timeestimation})
+handleUpdateSpecificRow = (id,idx) => () => {
+  console.log("iii "+idx)
+  console.log( this.state.userStories[idx].timeestimation)
+  this.setState({
+    userStories: [...this.state.userStories]
+  });
+  axios.put("http://localhost:3000/backlogProject/updateUserStory/5cbc4de40942e908ec256b88/5cbc4de40942e908ec256b8d",{
+    priority: this.state.userStories[idx].priority})
   .then((response) => {
     
     console.log("updated");
@@ -69,18 +69,15 @@ handleRemoveSpecificRow = (idx) => () => {
   });
  
 }
-componentDidMount() {
+componentDidMount(e) {
   var self = this;
   axios.get("http://localhost:3000/project/getBacklog/5cbad555e7622d2ab4868c60")
     .then((response) => {
-      console.log(response.data[0].userstories[0]);
-      
+      console.log(response.data[0].userstories.length);
       self.setState({
-          userStories:response.data[0].userstories,
-          ID:response.data[0]._id,
-      })
-      console.log(this.state.ID);
-      console.log("aaa"+this.state.userStories);
+        userStories:response.data[0].userstories,
+        ID:response.data[0]._id,})
+      console.log(this.state.userStories);
     })
     .catch(error => {
       console.log(error);
@@ -114,19 +111,19 @@ componentDidMount() {
                   </thead>
                   <tbody>
                   
-                    {
+                    { 
                       this.state.userStories.map((userstory,idx) => {
             return (
               <tr key={idx}>
-              <td hidden> <Input type="text" id="_id" name="_id" value={this.state.userStories._id} placeholder={userstory._id}
-                                                   onChange={this.onChange}/></td>
-              <td><Input type="text" id="_id" name="_id" value={this.state.userStories.userstory} placeholder={userstory.userStory}
-                                                   onChange={this.onChange}/></td>
-              <td><Input type="text" id="_id" name="_id" value={this.state.userStories.priority} placeholder={userstory.priority}
-                                                   onChange={this.onChange}/> </td>
-              <td><Input type="text" id="_id" name="_id" value={this.state.userStories.timeestimation} placeholder={userstory.timeestimation}
-                                                   onChange={this.onChange}/></td>
-               <td> <Button block color="primary" onClick={this.handleUpdateSpecificRow(userstory._id)}>Edit</Button></td>
+              <td hidden> <Input type="text" id="_id" name="_id" value={this.state.userStories[idx]._id} placeholder={userstory._id}
+                                                   onChange={this.onChange(idx)}/></td>
+              <td><Input type="text" id="userStory" name="userStory" value={this.state.userStories[idx].userStory} placeholder={userstory.userStory}
+                                                   onChange={this.onChange(idx)}/></td>
+              <td><Input type="text" id="priority" name="priority" value={this.state.userStories[idx].priority} placeholder={userstory.priority}
+                                                   onChange={this.onChange(idx)}/> </td>
+              <td><Input type="text" id="timeestimation" name="timeestimation" value={this.state.userStories[idx].timeestimation} placeholder={userstory.timeestimation}
+                                                   onChange={this.onChange(idx)}/></td>
+               <td> <Button block color="primary" onClick={this.handleUpdateSpecificRow(userstory._id,idx)}>Edit</Button></td>
               <td><Button block color="danger" onClick={this.handleRemoveSpecificRow(userstory._id)}>Delete</Button></td>
           
                     
