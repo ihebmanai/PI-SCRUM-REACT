@@ -1,7 +1,37 @@
 import React, { Component } from 'react';
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
 
+import axios from "axios";
 class ProjectList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      projects:[{
+      projectName: '',
+      startingDate:'',
+      endDate:'',
+      key:'',
+      status:'',
+      description:'',
+      scrumMaster:'',
+      productOwner:''
+      }]
+    }
+  }
+  componentDidMount(e) {
+    var self = this;
+    axios.get("http://localhost:3000/project")
+      .then((response) => {
+        console.log(response.data[0]);
+        self.setState({
+          projects:response.data[0]})
+        console.log(this.state.projects);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+     
+  }
   render() {
     return (
       <div className="animated fadeIn">
@@ -26,42 +56,24 @@ class ProjectList extends Component {
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Java Project</td>
-                    <td>JP</td>
-                    <td>New Java Project</td>
-                    <td>2019/01/01</td>
-                    <td>2019/05/01</td>
-                    <td>Mohamed ben Ali</td>
-                    <td>Mariem Ayari</td>
+                  {
+                      this.state.projects.map((project,idx) => {
+            return (
+                  <tr key={idx}>
+                    <td>{project.projectName}</td>
+                    <td>{project.key}</td>
+                    <td>{project.description}</td>
+                    <td>{project.startingDate}</td>
+                    <td>{project.endDate}</td>
+                    <td>{project.prductOwner}</td>
+                    <td>{project.scrumMaster}</td>
                     <td>
-                      <Badge color="success">Active</Badge>
+                      <Badge color="success">{project.status}</Badge>
                     </td>
                   </tr>
-                  <tr>
-                    <td>Node Project</td>
-                    <td>NP</td>
-                    <td>New Node Project</td>
-                    <td>2019/02/01</td>
-                    <td>2019/06/01</td>
-                    <td>Ali</td>
-                    <td>Mariem Ben Salah</td>
-                    <td>
-                      <Badge color="secondary">Inactive</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Scrum Project</td>
-                    <td>SP</td>
-                    <td>Scrum Project Manager Platform</td>
-                    <td>2019/03/01</td>
-                    <td>2019/07/01</td>
-                    <td>Nabil Ben Ali</td>
-                    <td>Mariem Ayari</td>
-                    <td>
-                      <Badge color="warning">Pending</Badge>
-                    </td>
-                  </tr>
+                       )})
+                       }
+            
                   </tbody>
                 </Table>
                 <Pagination>
