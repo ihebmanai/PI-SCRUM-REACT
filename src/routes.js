@@ -43,6 +43,8 @@ const BacklogProject = React.lazy(() => import('./views/Projects/BacklogProject'
 const DragDrop = React.lazy(() => import('./views/Projects/DragDrop'));
 const Statistics = React.lazy(() => import('./views/Statistics/Statistics'));
 const AllReleases = React.lazy(() => import('./views/Projects/AllReleases'));
+const AllIssues = React.lazy(() => import('./views/Projects/AllIssues'));
+const AddIssue = React.lazy(() => import('./views/Projects/AddIssue'));
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
@@ -92,7 +94,10 @@ const routes = [
   { path: '/projects/BacklogProject', exact: true, name: 'Backlog Project', component: BacklogProject},
   { path: '/projects/DragDrop', exact: true, name: 'drag drop', component: DragDrop},
   { path: '/statistics', exact: true, name: 'statistics', component: Statistics},
-  { path: '/projects/AllReleases', exact: true, name: 'all releases', component: AllReleases}
+  { path: '/projects/AllReleases', exact: true, name: 'all releases', component: AllReleases},
+  { path: '/projects/AllIssues', exact: true, name: 'all releases', component: AllIssues},
+  { path: '/projects/AddIssue', exact: true, name: 'all releases', component: AddIssue}
+  
 ];
 
 export default routes;

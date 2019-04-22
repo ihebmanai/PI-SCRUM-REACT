@@ -57,9 +57,9 @@ handleUpdateSpecificRow = (id,idx) => () => {
 handleRemoveSpecificRow = (idx) => () => {
   console.log("iii"+idx)
   const userStories = [...this.state.userStories]
-  userStories.splice(idx, 1)
   this.setState({ userStories })
-  axios.put("http://localhost:3000/backlogProject/delete/5cbc3978f5fbbe338870a59a/"+idx)
+  console.log("aaaaaa"+idx)
+  axios.put("http://localhost:3000/backlogProject/delete/5cbc4de40942e908ec256b88/"+idx)
   .then((response) => {
     
     console.log("deleted");

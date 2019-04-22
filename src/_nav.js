@@ -60,6 +60,22 @@ export default {
         }]
     },
     {
+      name: 'Issues',
+      url: '/Projects/Issues',
+      icon: 'icon-layers',
+      children: [
+        {
+          name: 'Add issue',
+          url:'/Projects/AddIssue',
+          icon: 'icon-pencil',
+        },
+        {
+          name: 'All Issues',
+          url: '/Projects/AllIssues',
+          icon: 'icon-layers',
+        }]
+    },
+    {
       name: 'Statistics',
       url: '/Statistics',
       icon: 'icon-graph',
