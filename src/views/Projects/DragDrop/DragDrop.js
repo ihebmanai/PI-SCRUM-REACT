@@ -1,7 +1,27 @@
 import React,{Component} from 'react'
 
 import {ListGroup,ListGroupItem,Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table ,Button} from 'reactstrap';
+import axios from "axios";
+import {
 
+  CardFooter,
+
+  
+  Collapse,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  Fade,
+  Form,
+  FormGroup,
+  FormText,
+  FormFeedback,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Label
+} from 'reactstrap';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 
 const styles = {
@@ -36,6 +56,13 @@ class DragDrop extends React.Component {
     constructor(props){
         super(props)
         this.state = {
+          title:'',
+          goals:"",
+          status:"unstarted",
+          startingDate:null,
+          releaseDate:null,
+          numberSprint:"",
+          userstories:[],
           items : [
             { ID : 1, UserStory : "As a user I want to reset my password   ",Priority:"1",TimeEstimation:"15" },
             { ID : 2, UserStory : "As a user I want to edit my profile  ",Priority:"2",TimeEstimation:"13"},
@@ -46,7 +73,46 @@ class DragDrop extends React.Component {
           leftContainer : []
         }
     }
+    onChange(e) {
+      e.preventDefault() 
+      this.setState({
+        [e.target.name] : e.target.value,
+       
+      })
+  }
+  componentDidMount() {
     
+  }
+    onSubmit(p) {
+      p.preventDefault() 
+      const data = this.state
+      console.log(data)
+      axios.post('http://localhost:3000/release/addRelease/5c9609a16bbc9f17c0c0d734',{
+        title: this.state.title,
+        goals:this.state.goals,
+        status:this.state.status,
+        numberSprint:this.state.numberSprint,
+        releaseDate:this.state.releaseDate,
+        startingDate:this.state.startingDate,
+        project:"5c9609a16bbc9f17c0c0d734"
+      })
+      .then(function (response) {
+        console.log(response);
+        if (response.status === 200) {
+          
+          console.log('release added')
+          alert('release added')
+        }
+      })
+      .catch(function(error){
+        console.log(error);
+      });
+  
+  
+  
+      this.setState({
+      })
+  }
     onDragStart = (e,v) =>{
         e.dataTransfer.dropEffect = "move";
         e.dataTransfer.setData( "text/plain", v )
@@ -77,7 +143,68 @@ class DragDrop extends React.Component {
         const {items, leftContainer, rightContainer} = this.state;
 
         return(
-          <div>
+         
+                    
+              <div style={styles.droppable}>
+              <div className="animated fadeIn">
+        <Row>
+          <Col xs="12">
+            <Card>
+              <CardHeader>
+                <strong>Add New Release</strong>
+              </CardHeader>
+              <form name="form" onSubmit={this.onSubmit}>
+              <CardBody>
+                
+                <FormGroup >
+                <InputGroup>
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>Title</InputGroupText>
+                      </InputGroupAddon>
+                      <Input type="text" id="title" name="title" value={this.state.title}
+                      onChange={this.onChange}/>
+                    </InputGroup>
+                </FormGroup>
+                <FormGroup>
+                <InputGroup>
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>Goals</InputGroupText>
+                      </InputGroupAddon>
+                      <Input type="textarea" id="goals" name="goals" value={this.state.goals}
+                                                   onChange={this.onChange} />
+                    </InputGroup>
+                </FormGroup>
+
+                <FormGroup>
+                <FormGroup>
+                <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                      <InputGroupText>Starting date</InputGroupText>
+                    </InputGroupAddon>
+                    <Input type="Date" id="startingDate" name="startingDate" value={this.state.startingDate}
+                                                 onChange={this.onChange}/>
+                  </InputGroup> 
+              </FormGroup>
+              
+              <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                      <InputGroupText>Release date</InputGroupText>
+                    </InputGroupAddon>
+                    <Input type="Date" id="releaseDate" name="releaseDate" value={this.state.releaseDate}
+                                                 onChange={this.onChange}/>
+                  </InputGroup> 
+              </FormGroup>
+              <FormGroup>
+              <InputGroup>
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>Number of sprints</InputGroupText>
+                      </InputGroupAddon>
+                      <Input type="text" id="numberSprint" name="numberSprint" value={this.state.numberSprint}
+                                                   onChange={this.onChange}/>
+                    </InputGroup>
+                </FormGroup>
+              
+      <div>
               <Nav />
               <div style={{ marginTop: '35px' , display:"-webkit-box"}}>
                    
@@ -104,38 +231,12 @@ class DragDrop extends React.Component {
                   </thead>
                   <tbody>
                   
-                  {
-                        items.map((item) =>{
-                          return <tr style= {{ backgroundColor:'white'}} draggable="true" onDragStart={ (e) => this.onDragStart(e,
-                          [item.ID+" : "+item.UserStory]) } >
-                          
-                          
-                          
-                          <td>{item.ID}</td>
-                    <td>{item.UserStory}</td>
-                    <td>{item.Priority}</td>
-                    <td>{item.TimeEstimation}</td>
-                  </tr>
-                          
-                        
-                        })
-                      }
+               
                     
                  
                   </tbody>
                 </Table>
-                <nav>
-                  <Pagination>
-                    <PaginationItem><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>
-                    <PaginationItem active>
-                      <PaginationLink tag="button">1</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">2</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">3</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">4</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink next tag="button">Next</PaginationLink></PaginationItem>
-                  </Pagination>
-                </nav>
+               
               </CardBody>
             </Card>
           </Col>
@@ -143,8 +244,6 @@ class DragDrop extends React.Component {
       </div>
 
       </div>  
-                    
-              <div style={styles.droppable}>
                 <div style={styles.left} onDragOver={this.allowDrop} onDrop={this.onDropLeft}>
                 <div className="animated fadeIn">
         
@@ -185,18 +284,19 @@ class DragDrop extends React.Component {
              </div>
 
               </div>
-
-                 
-               
-                <div style={styles.right} onDragOver={this.allowDrop} onDrop={this.onDropRight}>Release 2
-                  {
-                    rightContainer.map( itm =>{
-                      return <p>{itm}</p>
-                    })
-                  }
-                </div>
               </div>
+              </CardBody>
+              <CardFooter style={{display: 'flex', justifyContent: 'center'}}>
+                <Button  type="submit" size="m" color="primary"><i className="fa fa-dot-circle-o"></i> Add Release</Button>
+                <Button  type="reset" size="m"  color="danger"><i className="fa fa-ban"></i> Cancel</Button>
+              </CardFooter>
+              </form>
+            </Card>
+          </Col>
+        </Row>
+      </div>
           </div>
+         
         )
     }
 
