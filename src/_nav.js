@@ -28,7 +28,7 @@ export default {
           icon: 'icon-pencil',
         },
         {
-          name: 'Current Project',
+          name: 'Projects statistic',
           url: '/Projects/CurrentProject',
           icon: 'icon-clock',
         },
@@ -38,10 +38,19 @@ export default {
           icon: 'icon-grid',
         }]
     },
-    {
-      name: 'Backlog',
-      url: '/Projects/BacklogProject',
-      icon: 'icon-list',
+    {     name: 'Backlog',
+          url: '/Projects/BacklogProject',
+          icon: 'icon-list',
+      children: [
+        {
+          name: 'Add Backlog',
+          url:'/Projects/AddBacklog',
+          icon: 'icon-pencil',
+        },{
+          name: 'Update Backlog',
+          url: '/Projects/BacklogProject',
+          icon: 'icon-list',
+        }]
     },
     {
       name: 'Releases',
@@ -49,7 +58,7 @@ export default {
       icon: 'icon-layers',
       children: [
         {
-          name: 'Current Release',
+          name: 'Add new Release',
           url:'/Projects/DragDrop',
           icon: 'icon-clock',
         },

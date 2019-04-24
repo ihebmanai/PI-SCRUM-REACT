@@ -40,6 +40,7 @@ const ProjectList = React.lazy(() => import('./views/Projects/ProjectsList'));
 const AddProject = React.lazy(() => import('./views/Projects/AddProject'));
 const CurrentProject = React.lazy(() => import('./views/Projects/CurrentProject'));
 const BacklogProject = React.lazy(() => import('./views/Projects/BacklogProject'));
+const AddBacklog = React.lazy(() => import('./views/Projects/AddBacklog'));
 const DragDrop = React.lazy(() => import('./views/Projects/DragDrop'));
 const Statistics = React.lazy(() => import('./views/Statistics/Statistics'));
 const AllReleases = React.lazy(() => import('./views/Projects/AllReleases'));
@@ -92,6 +93,7 @@ const routes = [
   { path: '/projects/addProject', exact: true, name: 'Add Project', component: AddProject},
   { path: '/projects/currentProject', exact: true, name: 'Current Project', component: CurrentProject},
   { path: '/projects/BacklogProject', exact: true, name: 'Backlog Project', component: BacklogProject},
+  { path: '/projects/AddBacklog', exact: true, name: 'Add Backlog', component: AddBacklog},
   { path: '/projects/DragDrop', exact: true, name: 'drag drop', component: DragDrop},
   { path: '/statistics', exact: true, name: 'statistics', component: Statistics},
   { path: '/projects/AllReleases', exact: true, name: 'all releases', component: AllReleases},

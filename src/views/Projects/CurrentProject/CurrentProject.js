@@ -23,7 +23,7 @@ import {
 } from 'reactstrap';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
-
+import axios from "axios";
 
 const brandPrimary = getStyle('--primary')
 const brandSuccess = getStyle('--success')
@@ -460,6 +460,10 @@ class CurrentProject extends Component {
     this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
 
     this.state = {
+      done:'',
+      inprogress:'',
+      notstarted:'',
+      notdone:'',
       dropdownOpen: false,
       radioSelected: 2,
     };
@@ -478,7 +482,33 @@ class CurrentProject extends Component {
   }
 
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
+  componentDidMount(e) {
+    var self = this;
+    Promise.all([
+      axios
+      .get("http://localhost:3000/project/statistic?status=not started"),
+      axios
+      .get("http://localhost:3000/project/statistic?status=in progress"),
+      axios
+      .get("http://localhost:3000/project/statistic?status=done")
+    ])
+      .then(([response,response2,response3]) => {
+      console.log("1"+response.data)
 
+      console.log("2"+response2.data)
+      console.log("3"+response3.data)
+        this.setState({
+          notstarted:response.data,
+          inprogress:response2.data,
+          done:response3.data
+        }) })
+  
+      .catch(error => {
+        console.log(error);
+      });
+     
+  }
+  
   render() {
 
     return (
@@ -500,8 +530,8 @@ class CurrentProject extends Component {
                     </DropdownMenu>
                   </ButtonDropdown>
                 </ButtonGroup>
-                <div className="text-value">30%</div>
-                <div>Done work</div>
+                <div className="text-value">{this.state.done}</div>
+                <div>Done projects</div>
               </CardBody>
               <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
                 <Line data={cardChartData2} options={cardChartOpts2} height={70} />
@@ -526,7 +556,7 @@ class CurrentProject extends Component {
                     </DropdownMenu>
                   </Dropdown>
                 </ButtonGroup>
-                <div className="text-value">50%</div>
+                <div className="text-value">{this.state.inprogress}</div>
                 <div>In Progress</div>
               </CardBody>
               <div className="chart-wrapper" style={{ height: '70px' }}>
@@ -549,8 +579,8 @@ class CurrentProject extends Component {
                     </DropdownMenu>
                   </ButtonDropdown>
                 </ButtonGroup>
-                <div className="text-value">50%</div>
-                <div>To Do</div>
+                <div className="text-value">{this.state.notstarted}</div>
+                <div>Not started projects</div>
               </CardBody>
               <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
                 <Bar data={cardChartData4} options={cardChartOpts4} height={70} />

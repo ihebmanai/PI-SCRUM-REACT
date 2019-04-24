@@ -157,13 +157,14 @@ class DragDrop extends React.Component {
         e.preventDefault();
         const data = e.dataTransfer.getData("text/plain");
         let {leftContainer} = this.state;
-        leftContainer.push(data);
+        
         this.setState({ leftContainer });
         var arraaay=data.split(',')
         stories[i]._id=arraaay[0]
         stories[i].userstory=arraaay[1]
         stories[i].priority=arraaay[2]
         stories[i].timeestimation=arraaay[3]
+        leftContainer.push(stories[i]);
         this.state.ruserstories.push(stories[i])
         
         console.log("uuuser")
@@ -304,14 +305,14 @@ class DragDrop extends React.Component {
           <Col>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Release 1
+                <i className="fa fa-align-justify"></i> Release 
               </CardHeader>
               <CardBody>
               <ListGroup>
                   <ListGroupItem action color="success">
                   {
                     leftContainer.map( itm =>{
-                      return <tr style={{fontSize:'14px', color:'black'}}>{itm}</tr>
+                      return <tr style={{fontSize:'14px', color:'black'}}>{itm.userstory}</tr>
                     })
                   }
                   </ListGroupItem>
