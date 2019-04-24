@@ -64,18 +64,18 @@ class DragDrop extends React.Component {
           startingDate:null,
           releaseDate:null,
           numberSprint:"",
+          ruserstories:[{
+            userstory:'',
+            priority:'',
+            timeestimation:'',
+            _id:''
+          }],
           userstories:[{
             userStory:'',
             priority:'',
             timeestimation:'',
             _id:''
           }],
-          items : [
-            { ID : 1, UserStory : "As a user I want to reset my password   ",Priority:"1",TimeEstimation:"15" },
-            { ID : 2, UserStory : "As a user I want to edit my profile  ",Priority:"2",TimeEstimation:"13"},
-            { ID : 3, UserStory : "As a user I want to cancel my order   ",Priority:"2",TimeEstimation:"15" },
-            { ID : 4, UserStory : "As a user I want to update my order  ",Priority:"4",TimeEstimation:"12" }
-          ],
           rightContainer : [],
           leftContainer : []
         }
@@ -104,6 +104,7 @@ class DragDrop extends React.Component {
       p.preventDefault() 
       const data = this.state
       console.log(data)
+      this.state.ruserstories.splice(0, 1)
       axios.post('http://localhost:3000/release/addRelease/5c9609a16bbc9f17c0c0d734',{
         title: this.state.title,
         goals:this.state.goals,
@@ -111,7 +112,9 @@ class DragDrop extends React.Component {
         numberSprint:this.state.numberSprint,
         releaseDate:this.state.releaseDate,
         startingDate:this.state.startingDate,
-        project:"5c9609a16bbc9f17c0c0d734"
+        project:"5c9609a16bbc9f17c0c0d734",
+        userstories:this.state.ruserstories
+
       })
       .then(function (response) {
         console.log(response);
@@ -133,8 +136,8 @@ class DragDrop extends React.Component {
     onDragStart = (e,v) =>{
         e.dataTransfer.dropEffect = "move";
         e.dataTransfer.setData( "text/plain", v )
-        console.log("eeeedd"+e)
-        console.log("vvvddd"+v)
+        console.log("eeeedd")
+        console.log(this.state.ruserstories);
         
     }
     
@@ -144,12 +147,29 @@ class DragDrop extends React.Component {
     }
     
     onDropLeft = e =>{
+      var stories=[{
+        userstory:'',
+        priority:'',
+        timeestimation:'',
+        _id:''
+      }]
+      var i=0
         e.preventDefault();
         const data = e.dataTransfer.getData("text/plain");
         let {leftContainer} = this.state;
         leftContainer.push(data);
         this.setState({ leftContainer });
-        console.log(data.type)
+        var arraaay=data.split(',')
+        stories[i]._id=arraaay[0]
+        stories[i].userstory=arraaay[1]
+        stories[i].priority=arraaay[2]
+        stories[i].timeestimation=arraaay[3]
+        this.state.ruserstories.push(stories[i])
+        
+        console.log("uuuser")
+        console.log(this.state.ruserstories);
+        i++
+        
     }
     
     onDropRight = e =>{
