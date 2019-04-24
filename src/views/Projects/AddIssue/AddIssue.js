@@ -82,23 +82,34 @@ componentDidMount() {
 }
   onSubmit(p) {
     p.preventDefault() 
+    var s="0",e="0",b="0"
+    var java="0",php="0",angular="0"
+    if (this.state.type=="story") s="1"
+    else if (this.state.type=="bug") b="1"
+    else if (this.state.type=="epic") e="1"
+    if (this.state.language=="java") java="1"
+    else if (this.state.language=="php") php="1"
+    else if (this.state.type=="angular") angular="1"
+    var ch=""
+    ch=angular+","+java+","+php+","+b+","+e+","+s
+    console.log("chh"+ch)
     const data = this.state
     console.log(data)
     let today = new Date();
     let date1=today.getFullYear() + "-0"+parseInt(today.getMonth()+1)+"-"+ parseInt(today.getDate())
     this.setState({createdDate:date1})
-    axios.post('http://localhost:3000/issue/add/5cbacf5e75c4bc1df0a5bf6e',{
+    axios.post('http://localhost:3000/issue/add/5cbacf5e75c4bc1df0a5bf6e?ch='+ch,{
       title: this.state.title,
       description:this.state.description,
       status:this.state.status,
       project:this.state.project,
       language:this.state.language,
-      createdDate:this.state.createdDate,
+      createdDate:date1,
       type:this.state.type
     })
     .then(function (response) {
       console.log(response);
-      if (response.status === 201) {
+      if (response.status === 200) {
         
         console.log('issue added')
         alert('issue added')

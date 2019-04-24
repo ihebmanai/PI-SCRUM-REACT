@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table ,Button,Input} from 'reactstrap';
+import { Badge, Card, CardBody, CardHeader, Col,Modal, ModalBody, ModalFooter, ModalHeader, Pagination, PaginationItem, PaginationLink, Row, Table ,Button,Input} from 'reactstrap';
 import axios from "axios";
 class BacklogProject extends Component {
   constructor(props) {
@@ -7,6 +7,8 @@ class BacklogProject extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.state = {
+      modal: false,
+      danger: false,
       idDel:'',
       ID:'',
       userStories:[{
@@ -17,8 +19,13 @@ class BacklogProject extends Component {
       }]
       
     }
+    this.toggleDanger = this.toggleDanger.bind(this);
   }
-
+  toggleDanger() {
+    this.setState({
+      danger: !this.state.danger,
+    });
+  }
     onChange = idx => e => {
       const { name, value } = e.target;
       const userStories = [...this.state.userStories];
@@ -48,6 +55,7 @@ handleUpdateSpecificRow = (id,idx) => () => {
   .then((response) => {
     
     console.log("updated");
+    alert('User story updated')
   })
   .catch(error => {
     console.log(error);
@@ -60,10 +68,13 @@ handleRemoveSpecificRow = (idx) => () => {
   this.setState({ userStories })
   console.log("aaaaaa"+idx)
   userStories.splice(idx, 1)
-  axios.put("http://localhost:3000/backlogProject/delete/5cbc4de40942e908ec256b88/"+idx)
+  axios.put("http://localhost:3000/backlogProject/delete/5cbf5fe712e1591b80b000c0/"+idx)
   .then((response) => {
     
     console.log("deleted");
+    this.setState({
+      danger: !this.state.danger,
+    });
   })
   .catch(error => {
     console.log(error);
@@ -102,7 +113,7 @@ componentDidMount(e) {
                 <Table hover bordered striped responsive size="sm">
                   <thead>
                   <tr>
-                    <th>User Stroy</th>
+                    <th>User Story</th>
                     <th>Priority</th>
                     <th>Time Estimation</th>
                     <th></th>
@@ -124,10 +135,20 @@ componentDidMount(e) {
                                                    onChange={this.onChange(idx)}/> </td>
               <td><Input type="text" id="timeestimation" name="timeestimation" value={this.state.userStories[idx].timeestimation} placeholder={userstory.timeestimation}
                                                    onChange={this.onChange(idx)}/></td>
-               <td> <Button block color="primary" onClick={this.handleUpdateSpecificRow(userstory._id,idx)}>Edit</Button></td>
-              <td><Button block color="danger" onClick={this.handleRemoveSpecificRow(userstory._id)}>Delete</Button></td>
+               <td> <Button block color="primary" onClick={this.handleUpdateSpecificRow(userstory._id)}>Edit</Button></td>
+              <td><Button block color="danger"  onClick={this.toggleDanger} >Delete</Button></td>
           
-                    
+              <Modal isOpen={this.state.danger} toggle={this.toggleDanger}
+                       className={'modal-danger ' + this.props.className}>
+                  <ModalHeader toggle={this.toggleDanger}>Delete user story</ModalHeader>
+                  <ModalBody>
+                    Are you sure ?
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="danger" onClick={this.handleRemoveSpecificRow(userstory._id,idx)}>Delete</Button>{' '}
+                    <Button color="secondary" onClick={this.toggleDanger}>Cancel</Button>
+                  </ModalFooter>
+                </Modal>  
               </tr>
             );
           })
