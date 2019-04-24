@@ -55,6 +55,8 @@ const styles = {
 class DragDrop extends React.Component {
     constructor(props){
         super(props)
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
         this.state = {
           title:'',
           goals:"",
@@ -62,7 +64,12 @@ class DragDrop extends React.Component {
           startingDate:null,
           releaseDate:null,
           numberSprint:"",
-          userstories:[],
+          userstories:[{
+            userStory:'',
+            priority:'',
+            timeestimation:'',
+            _id:''
+          }],
           items : [
             { ID : 1, UserStory : "As a user I want to reset my password   ",Priority:"1",TimeEstimation:"15" },
             { ID : 2, UserStory : "As a user I want to edit my profile  ",Priority:"2",TimeEstimation:"13"},
@@ -73,15 +80,25 @@ class DragDrop extends React.Component {
           leftContainer : []
         }
     }
-    onChange(e) {
-      e.preventDefault() 
+    componentDidMount(e) {
+      var self = this;
+      axios.get("http://localhost:3000/project/getBacklog/5cb871eba574f82f8ce1a2b8")
+        .then((response) => {
+          self.setState({
+            userstories:response.data[0].userstories,
+          })
+        })
+        .catch(error => {
+          console.log(error);
+        });
+       
+    }
+    onChange(event) {
+      event.preventDefault() 
       this.setState({
-        [e.target.name] : e.target.value,
+        [event.target.name] : event.target.value,
        
       })
-  }
-  componentDidMount() {
-    
   }
     onSubmit(p) {
       p.preventDefault() 
@@ -116,6 +133,9 @@ class DragDrop extends React.Component {
     onDragStart = (e,v) =>{
         e.dataTransfer.dropEffect = "move";
         e.dataTransfer.setData( "text/plain", v )
+        console.log("eeeedd"+e)
+        console.log("vvvddd"+v)
+        
     }
     
     allowDrop = ev =>{
@@ -129,6 +149,7 @@ class DragDrop extends React.Component {
         let {leftContainer} = this.state;
         leftContainer.push(data);
         this.setState({ leftContainer });
+        console.log(data.type)
     }
     
     onDropRight = e =>{
@@ -137,6 +158,7 @@ class DragDrop extends React.Component {
         let {rightContainer} = this.state;
         rightContainer.push(data);
         this.setState({ rightContainer });
+        
     }
 
     render() {
@@ -223,7 +245,6 @@ class DragDrop extends React.Component {
                 <Table hover bordered striped responsive size="sm">
                   <thead>
                   <tr>
-                    <th>ID</th>
                     <th>User Stroy</th>
                     <th>Priority</th>
                     <th>Time Estimation</th>
@@ -231,7 +252,19 @@ class DragDrop extends React.Component {
                   </thead>
                   <tbody>
                   
-               
+                 
+                  { 
+                    this.state.userstories.map((userstory,idx) => {
+          return (
+            <tr key={idx} style= {{ backgroundColor:'white'}} draggable="true" onDragStart={ (e) => this.onDragStart(e,[userstory._id,userstory.userStory,userstory.priority,userstory.timeestimation])}>
+                    <td>{userstory.userStory}</td>
+                    <td>{userstory.priority}</td>
+                    <td>{userstory.timeestimation}</td>
+                  </tr>
+                          
+                );
+              })
+                        }
                     
                  
                   </tbody>
@@ -258,7 +291,7 @@ class DragDrop extends React.Component {
                   <ListGroupItem action color="success">
                   {
                     leftContainer.map( itm =>{
-                      return <tr><p style={{fontSize:'14px', color:'black'}}>{itm}</p><hr></hr></tr>
+                      return <tr style={{fontSize:'14px', color:'black'}}>{itm}</tr>
                     })
                   }
                   </ListGroupItem>
