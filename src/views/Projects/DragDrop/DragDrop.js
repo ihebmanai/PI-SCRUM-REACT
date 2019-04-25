@@ -82,7 +82,7 @@ class DragDrop extends React.Component {
     }
     componentDidMount(e) {
       var self = this;
-      axios.get("http://localhost:3000/project/getBacklog/5cb871eba574f82f8ce1a2b8")
+      axios.get("http://localhost:3000/project/getBacklog/5cc23892b8a2c809c0998415")
         .then((response) => {
           self.setState({
             userstories:response.data[0].userstories,
@@ -105,14 +105,14 @@ class DragDrop extends React.Component {
       const data = this.state
       console.log(data)
       this.state.ruserstories.splice(0, 1)
-      axios.post('http://localhost:3000/release/addRelease/5c9609a16bbc9f17c0c0d734',{
+      axios.post('http://localhost:3000/release/addRelease/5cc23892b8a2c809c0998415',{
         title: this.state.title,
         goals:this.state.goals,
         status:this.state.status,
         numberSprint:this.state.numberSprint,
         releaseDate:this.state.releaseDate,
         startingDate:this.state.startingDate,
-        project:"5c9609a16bbc9f17c0c0d734",
+        project:"5cc23892b8a2c809c0998415",
         userstories:this.state.ruserstories
 
       })

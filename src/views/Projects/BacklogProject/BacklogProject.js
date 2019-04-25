@@ -50,7 +50,7 @@ handleUpdateSpecificRow = (id,idx) => () => {
   this.setState({
     userStories: [...this.state.userStories]
   });
-  axios.put("http://localhost:3000/backlogProject/updateUserStory/5cbc4de40942e908ec256b88/5cbc4de40942e908ec256b8d",{
+  axios.put("http://localhost:3000/backlogProject/updateUserStory/5c96402f20a9240ec8f5c590/5cc242919d7ae11fe8722c84",{
     priority: this.state.userStories[idx].priority})
   .then((response) => {
     
@@ -68,7 +68,7 @@ handleRemoveSpecificRow = (idx) => () => {
   this.setState({ userStories })
   console.log("aaaaaa"+idx)
   userStories.splice(idx, 1)
-  axios.put("http://localhost:3000/backlogProject/delete/5cbf5fe712e1591b80b000c0/"+idx)
+  axios.put("http://localhost:3000/backlogProject/delete/5c96402f20a9240ec8f5c590/"+idx)
   .then((response) => {
     
     console.log("deleted");
@@ -83,7 +83,7 @@ handleRemoveSpecificRow = (idx) => () => {
 }
 componentDidMount(e) {
   var self = this;
-  axios.get("http://localhost:3000/project/getBacklog/5cbad555e7622d2ab4868c60")
+  axios.get("http://localhost:3000/project/getBacklog/5cc23892b8a2c809c0998415")
     .then((response) => {
       console.log(response.data[0].userstories.length);
       self.setState({
@@ -135,7 +135,7 @@ componentDidMount(e) {
                                                    onChange={this.onChange(idx)}/> </td>
               <td><Input type="text" id="timeestimation" name="timeestimation" value={this.state.userStories[idx].timeestimation} placeholder={userstory.timeestimation}
                                                    onChange={this.onChange(idx)}/></td>
-               <td> <Button block color="primary" onClick={this.handleUpdateSpecificRow(userstory._id)}>Edit</Button></td>
+               <td> <Button block color="primary" onClick={this.handleUpdateSpecificRow(userstory._id,idx)}>Edit</Button></td>
               <td><Button block color="danger"  onClick={this.toggleDanger} >Delete</Button></td>
           
               <Modal isOpen={this.state.danger} toggle={this.toggleDanger}

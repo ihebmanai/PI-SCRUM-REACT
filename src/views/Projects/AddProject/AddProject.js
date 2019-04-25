@@ -80,11 +80,26 @@ componentDidMount() {
       console.log(error);
     });
 }
+cancelee(){
+  var self=this
+  self.setState({
+    projectName: '',
+    startingDate:'',
+    endDate:'',
+    key:'',
+    status:'not started',
+    description:'',
+    scrumMaster:''
+
+  })
+
+}
   onSubmit(p) {
+    var self=this
     p.preventDefault() 
     const data = this.state
     console.log(data)
-    axios.post('http://localhost:3000/project/add/5cbacf5e75c4bc1df0a5bf6e',{
+    axios.post('http://localhost:3000/project/add/5c950997c8fc1f2d846c17e2',{
       projectName: this.state.projectName,
       key:this.state.key,
       status:this.state.status,
@@ -99,6 +114,16 @@ componentDidMount() {
         
         console.log('project added')
         alert('project added')
+        self.setState({
+          projectName: '',
+          startingDate:'',
+          endDate:'',
+          key:'',
+          status:'not started',
+          description:'',
+          scrumMaster:''
+
+        })
       }
     })
     .catch(function(error){
@@ -196,7 +221,7 @@ componentDidMount() {
               </CardBody>
               <CardFooter style={{display: 'flex', justifyContent: 'center'}}>
                 <Button  type="submit" size="m" color="primary"><i className="fa fa-dot-circle-o"></i> Add Project</Button>
-                <Button  type="reset" size="m"  color="danger"><i className="fa fa-ban"></i> Cancel</Button>
+                <Button  type="reset" size="m"  color="danger" ><i className="fa fa-ban"></i> Cancel</Button>
               </CardFooter>
               </form>
             </Card>
