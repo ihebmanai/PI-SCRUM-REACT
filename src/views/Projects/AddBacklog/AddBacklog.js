@@ -11,9 +11,15 @@ class AddBacklog extends Component {
       danger: false,
       ID:'',
       _id:'',
-      userStory:'',
-      priority:'',
-      timeestimation:''
+      userstory:'',
+      p:'',
+      t:'',
+      userstories:[{
+        _id:'',
+        userStory:'',
+        priority:'',
+        timeestimation:''
+      }]
       
       
     }
@@ -24,57 +30,59 @@ class AddBacklog extends Component {
       danger: !this.state.danger,
     });
   }
-    onChange = idx => e => {
-      const { name, value } = e.target;
-      const userStories = [...this.state.userStories];
-      userStories[idx] = {
-        [name]: value
-      };
+    onChange (event){
+      event.preventDefault() 
       this.setState({
-        userStories
-      });
+        [event.target.name] : event.target.value,
+       
+      })
     }
-onSubmit(p) {
-  p.preventDefault() 
-  const data = this.state
-  console.log(p)
-  
-  this.setState({
-  })
-}
-handleUpdateSpecificRow = (id,idx) => () => {
-  console.log("iii "+idx)
-  console.log( this.state.userStories[idx].timeestimation)
-  this.setState({
-    userStories: [...this.state.userStories]
-  });
-  axios.put("http://localhost:3000/backlogProject/updateUserStory/5cbc4de40942e908ec256b88/5cbc4de40942e908ec256b8d",{
-    priority: this.state.userStories[idx].priority})
-  .then((response) => {
+    onSubmit(p) {
+      var self=this
+      p.preventDefault() 
+      const data = this.state
+      console.log(data)
+      axios.put('http://localhost:3000/backlogProject/addUserStory/5c96402f20a9240ec8f5c590',{
+        
+        userStory: this.state.userstory,
+        priority:this.state.p,
+        timeestimation:this.state.t
+      })
+      .then(function (response) {
+        console.log(response);
+        if (response.status === 200) {
+          
+          console.log("added")
+         self.forceUpdate()
+        }
+      })
+      .catch(function(error){
+        console.log(error);
+      });
     
-    console.log("updated");
-    alert('User story updated')
-  })
-  .catch(error => {
-    console.log(error);
-  })
+      this.setState({
+        
+      });
+  
+  }
  
-}
 
 componentDidMount(e) {
+
   var self = this;
-  axios.get("http://localhost:3000/project/getBacklog/5cbad555e7622d2ab4868c60")
+  axios.get("http://localhost:3000/project/getBacklog/5c9609a16bbc9f17c0c0d734")
     .then((response) => {
-      console.log(response.data[0].userstories.length);
+      console.log(response.data[0]);
       self.setState({
-        userStories:response.data[0].userstories,
+        userstories:response.data[0].userstories,
         ID:response.data[0]._id,})
-      console.log(this.state.userStories);
+      console.log(this.state.userstories);
+    
     })
     .catch(error => {
       console.log(error);
     });
-   
+  
 }
 
   render() {
@@ -88,7 +96,7 @@ componentDidMount(e) {
               <CardHeader>
                 <i className="fa fa-align-justify"></i> Backlog Project
               </CardHeader>
-             
+              <form name="form" onSubmit={this.onSubmit}>
               <CardBody>
                 <Table hover bordered striped responsive size="sm">
                   <thead>
@@ -103,33 +111,32 @@ componentDidMount(e) {
                   </thead>
                   <tbody>
                   
-                   
-              <tr >
-              <td hidden> <Input type="text" id="_id" name="_id" value={this.state._id} 
+                  { 
+                    this.state.userstories.map((userstory,idx) => {
+          return (
+            <tr key={idx}>
+              <td><Input type="text" id="userStory" name="userStory" value={this.state.userStory} placeholder={userstory.userStory}
+                                                   onChange={this.onChange} disabled/></td>
+              <td><Input type="text" id="priority" name="priority" value={this.state.priority} placeholder={userstory.priority}
+                                                   onChange={this.onChange} disabled/> </td>
+              <td><Input type="text" id="timeestimation" name="timeestimation" value={this.state.timeestimation} placeholder={userstory.timeestimation}
+                                                   onChange={this.onChange} disabled/></td>
+                    <td> <Button block color="primary" disabled>Add user story</Button></td>
+              <td><Button block color="danger"  onClick={this.toggleDanger} disabled>Cancel</Button></td>
+              </tr>
+                     ) }) }
+                     <tr >
+              <td><Input type="text" id="userstory" name="userstory" value={this.state.userstory} 
                                                    onChange={this.onChange}/></td>
-              <td><Input type="text" id="userStory" name="userStory" value={this.state.userStory}
-                                                   onChange={this.onChange}/></td>
-              <td><Input type="text" id="priority" name="priority" value={this.state.priority} 
+              <td><Input type="text" id="p" name="p" value={this.state.p} 
                                                    onChange={this.onChange}/> </td>
-              <td><Input type="text" id="timeestimation" name="timeestimation" value={this.state.timeestimation}
+              <td><Input type="text" id="t" name="t" value={this.state.t}
                                                    onChange={this.onChange}/></td>
                <td> <Button block color="primary" >Add user story</Button></td>
               <td><Button block color="danger"  onClick={this.toggleDanger} >Cancel</Button></td>
           
-              <Modal isOpen={this.state.danger} toggle={this.toggleDanger}
-                       className={'modal-danger ' + this.props.className}>
-                  <ModalHeader toggle={this.toggleDanger}>Delete user story</ModalHeader>
-                  <ModalBody>
-                    Are you sure ?
-                  </ModalBody>
-                  <ModalFooter>
-                   
-                    <Button color="secondary" onClick={this.toggleDanger}>Add User story</Button>
-                    <Button color="danger" >Cancel</Button>{' '}
-                  </ModalFooter>
-                </Modal>  
+              
               </tr>
-                    
                     </tbody>
                 </Table>
                
@@ -146,6 +153,7 @@ componentDidMount(e) {
                   </Pagination>
                 </nav>
               </CardBody>
+              </form>
             </Card>
           </Col>
         </Row>
