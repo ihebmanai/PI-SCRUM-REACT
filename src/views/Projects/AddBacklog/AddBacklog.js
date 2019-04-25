@@ -4,6 +4,7 @@ import axios from "axios";
 class AddBacklog extends Component {
   constructor(props) {
     super(props);
+
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.state = {
@@ -25,6 +26,7 @@ class AddBacklog extends Component {
     }
     this.toggleDanger = this.toggleDanger.bind(this);
   }
+  
   toggleDanger() {
     this.setState({
       danger: !this.state.danger,
@@ -51,21 +53,30 @@ class AddBacklog extends Component {
       .then(function (response) {
         console.log(response);
         if (response.status === 200) {
+          const i={
+            userStory: self.state.userstory,
+            priority:self.state.p,
+            timeestimation:self.state.t
+           }
+           
+         
+         alert("User story has been added!")
+       
+         self.setState({
+          userstories:[...self.state.userstories,i],
+          userstory:'',p:'',t:''
           
-          console.log("added")
-         self.forceUpdate()
+        })
         }
       })
       .catch(function(error){
         console.log(error);
       });
-    
       this.setState({
         
       });
+    }
   
-  }
- 
 
 componentDidMount(e) {
 
@@ -134,7 +145,7 @@ componentDidMount(e) {
                                                    onChange={this.onChange}/></td>
                <td> <Button block color="primary" >Add user story</Button></td>
               <td><Button block color="danger"  onClick={this.toggleDanger} >Cancel</Button></td>
-          
+              
               
               </tr>
                     </tbody>
