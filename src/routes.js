@@ -1,5 +1,6 @@
 import React from 'react';
 import DefaultLayout from './containers/DefaultLayout';
+import addformation from './views/BacklogSprint/addformation';
 
 const Breadcrumbs = React.lazy(() => import('./views/Base/Breadcrumbs'));
 const Cards = React.lazy(() => import('./views/Base/Cards'));
@@ -44,6 +45,8 @@ const BackLogDetail = React.lazy(() => import('./views/BacklogSprint/BackLogDeta
 const WishList = React.lazy(() => import('./views/BacklogSprint/MyWishList'));
 const Votes = React.lazy(() => import('./views/BacklogSprint/Votes'));
 const chart = React.lazy(() => import('./views/BacklogSprint/burnchart'));
+const formation = React.lazy(() => import('./views/BacklogSprint/addformation'));
+const cv = React.lazy(() => import('./views/BacklogSprint/mycv'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -95,7 +98,9 @@ const routes = [
 	{ path: '/BackLogDetail/:id', name: 'Backlog detail', component: BackLogDetail },
 	{ path: '/wishlist', exact: true, name: 'Wish List', component: WishList },
 	{ path: '/votes', exact: true, name: 'Votes', component: Votes },
-	{ path: '/chart', exact: true, name: 'chart', component: chart }
+	{ path: '/chart', exact: true, name: 'chart', component: chart },
+	{ path: '/addformation', exact: true, name: 'chart', component: addformation },
+	{ path: '/cv', exact: true, name: 'chart', component: cv }
 ];
 
 export default routes;

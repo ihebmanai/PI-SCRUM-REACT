@@ -6,6 +6,16 @@ export default {
 			icon: 'icon-speedometer'
 		},
 		{
+			name: 'cv',
+			url: '/cv',
+			icon: 'icon-speedometer'
+		},
+		{
+			name: 'add Formation',
+			url: '/addformaion',
+			icon: 'icon-speedometer'
+		},
+		{
 			name: 'Wish List',
 			url: '/wishlist',
 			icon: 'icon-speedometer'
