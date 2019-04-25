@@ -41,8 +41,10 @@ class Widget03 extends Component {
     return (
       <div className={classes}>
         <div className={classCardHeader}>
-          <i className={icon}></i>
-          {children}
+        <div className="avatar">
+                        <img src={'assets/img/avatars/1.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                        <span className="avatar-status badge-success"></span>
+                      </div>          {children}
         </div>
         <div className={classCardBody}>
           <div>

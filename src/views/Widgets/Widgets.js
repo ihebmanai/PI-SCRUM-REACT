@@ -151,8 +151,10 @@ class Widgets extends Component {
           <Col xs={12} sm={6} md={3}>
             <Widget03 dataBox={() => ({ variant: 'facebook', friends: '89k', feeds: '459' })} >
               <div className="chart-wrapper">
-                <Line data={makeSocialBoxData(0)} options={socialChartOpts} height={90} />
-              </div>
+              <div className="avatar">
+                        <img src={'assets/img/avatars/1.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                        <span className="avatar-status badge-success"></span>
+                      </div>              </div>
             </Widget03>
           </Col>
           <Col xs={12} sm={6} md={3}>
