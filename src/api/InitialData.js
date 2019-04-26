@@ -27,27 +27,27 @@ const initialdata = {
     }
   },
   columns: {
-    0: {
-      _id: "0",
+    "ToDo": {
+      _id: "ToDo",
       EtatName: "To Do",
       UserStories: ["6", "7", "8", "9", "10"]
     },
-    1: {
-      _id: "1",
+    "InProgress": {
+      _id: "InProgress",
       EtatName: "In Progress",
       UserStories: []
     },
-    2: {
-      _id: "2",
+    "Test": {
+      _id: "Test",
       EtatName: "Test",
       UserStories: []
     },
-    3: {
-      _id: "3",
+    "Done": {
+      _id: "Done",
       EtatName: "Done",
       UserStories: []
     }
   },
-  columnOrder: ["0", "1", "2", "3"]
+  columnOrder: ["ToDo", "InProgress", "Test","Done"]
 };
 export default initialdata;

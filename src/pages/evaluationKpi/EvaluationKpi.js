@@ -5,7 +5,11 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
   fetchSprints,
-  fetchMemberBySprint
+  fetchMemberBySprint,
+  fetchMemberBySprintRate,
+  restStore,
+  fetchAbsence,
+  fetchMemberWorkDone
 } from "../../actions/ScrumtableActions";
 const Container = styled.div`
   display: flex;
@@ -52,28 +56,56 @@ const Option = Select.Option;
 class EvaluationKpi extends Component {
   state = {
     sprint: "",
-    memeber: ""
+    memeber: "",
+    meetings: [{}],
+    userStorys: [{}],
+    note: 0,
+    sumFinal: 0
   };
   componentDidMount() {
     this.props.fetchSprints();
   }
   handleChangeSelectSprint = value => {
-    console.log(`selected ${value}`);
+    this.setState({ note: 0 });
+    // this.props.restStore();
+    this.props.scrum.sprints.data &&
+      this.props.scrum.sprints.data.forEach(element => {
+        if (value === element._id) {
+          this.setState({ meetings: { meetings: element.Meetings } });
+        }
+      });
+
     this.setState({ sprint: value });
     this.props.fetchMemberBySprint(value);
+    this.props.fetchMemberBySprintRate(value);
+
+    this.setState({ memeber: "" });
   };
 
   handleFocusSprint() {
-    console.log("blur");
+    // this.props.restStore();
   }
 
-  handleBlurSprint() {
-    console.log("focus");
-  }
+  handleBlurSprint = value => {
+    this.props.scrum.memberRateBySprint.devs &&
+      this.props.scrum.memberRateBySprint.devs.forEach(element => {
+        if (value === element.sprint) {
+          this.setState({ note: element.note });
+        } else this.setState({ note: 0 });
+      });
+  };
 
   handleChangeSelectMember = value => {
-    console.log(`selected ${value}`);
+    this.props.scrum.memberBySprint.devs &&
+      this.props.scrum.memberBySprint.devs.forEach(element => {
+        if (value === element._id) {
+          this.setState({ userStorys: { userStorys: element.userStories } });
+        }
+      });
     this.setState({ memeber: value });
+    console.log(this.state.meetings);
+    this.props.fetchAbsence(value, this.state.meetings);
+    this.props.fetchMemberWorkDone(value);
   };
 
   handleFocusMember() {
@@ -82,6 +114,31 @@ class EvaluationKpi extends Component {
 
   handleBlurMember() {
     console.log("focus");
+  }
+  componentWillUnmount() {
+    // this.props.restStore();
+  }
+  sum = value => {
+    return this.state.meetings.meetings.length > 0
+      ? (value * 100) / this.state.meetings.meetings.length
+      : 0;
+  };
+  sumWork = value => {
+    return this.state.userStorys.userStorys.length > 0
+      ? (value * 100) / this.state.userStorys.userStorys.length
+      : 0;
+  };
+  sumRate = value => {
+    return this.state.note > 0 ? (value * 100) / 5 : 0;
+  };
+  sumFinal() {
+    const sumFinal = Number(
+      this.sum(this.props.scrum.absence.presence) +
+        this.sumWork(this.props.scrum.workDone.workDone) +
+        this.sumRate(this.state.note) / 3
+    ).toFixed(1);
+
+    return sumFinal;
   }
   render() {
     return (
@@ -100,7 +157,7 @@ class EvaluationKpi extends Component {
             {this.props.scrum.sprints.data &&
               this.props.scrum.sprints.data.map(item => (
                 <Option key={item._id} value={item._id}>
-                  {item.name}{" "}
+                  {item.name}
                 </Option>
               ))}
           </Select>
@@ -128,17 +185,26 @@ class EvaluationKpi extends Component {
         {this.state.memeber && (
           <Content>
             <Item>
-              <Label>Absences</Label> <ScoreBox>90%</ScoreBox>
+              <Label>Presence</Label>{" "}
+              <ScoreBox>
+                {" "}
+                {this.sum(this.props.scrum.absence.presence)}%{" "}
+              </ScoreBox>
             </Item>
             <Item>
-              <Label>Work Done</Label> <ScoreBox>90%</ScoreBox>
+              <Label>Work Done</Label>{" "}
+              <ScoreBox>
+                {this.sumWork(this.props.scrum.workDone.workDone)}%
+              </ScoreBox>
             </Item>
             <Item>
-              <Label>Behavior</Label> <ScoreBox>90%</ScoreBox>
+              <Label>Behavior</Label>{" "}
+              <ScoreBox>{this.sumRate(this.state.note)}%</ScoreBox>
             </Item>
             <Item>
               {" "}
-              <Label>Final score</Label> <ScoreBox>90%</ScoreBox>
+              <Label>Final score</Label>{" "}
+              <ScoreBox>{this.sumFinal()}% </ScoreBox>
             </Item>
           </Content>
         )}
@@ -155,6 +221,13 @@ const mapStateToProps = state => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { fetchSprints, fetchMemberBySprint }
+    {
+      fetchSprints,
+      fetchMemberBySprint,
+      fetchMemberBySprintRate,
+      restStore,
+      fetchAbsence,
+      fetchMemberWorkDone
+    }
   )(EvaluationKpi)
 );

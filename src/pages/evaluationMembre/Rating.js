@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
   fetchSprints,
-  fetchMemberBySprint
+  fetchMemberBySprintRate,
+  updateRating
 } from "../../actions/ScrumtableActions";
 import styled from "styled-components";
 
@@ -29,41 +30,31 @@ const Option = Select.Option;
 
 class Rating extends Component {
   state = {
-    value: "",
-    data: [
-      {
-        key: "1",
-        name: "mohamed",
-        rating: 3
-      },
-      {
-        key: "2",
-        name: "zeyneb",
-        rating: 5
-      },
-      {
-        key: "3",
-        name: "Malek",
-        rating: 3
-      }
-    ]
+    value: ""
   };
   componentDidMount() {
     this.props.fetchSprints();
   }
   handleChangeRating = (record, rating) => {
-    const newData = Object.assign([], this.state.data);
-    newData.forEach(item => {
-      if (item.key === record.key) {
-        item.rating = rating;
-      }
-    });
-    this.setState({ data: newData });
+    // const newData = Object.assign([], this.props.scrum.memberRateBySprint.devs);
+    // newData.forEach(item => {
+    //   if (item._id === record._id) {
+    //     item.note = note;
+    //   }
+    // });
+    const values={
+      _id:record._id,
+      note:rating,
+    }
+    this.props.updateRating(values);
+
+     this.props.fetchMemberBySprintRate(record.sprint);
   };
+
   handleChangeSelect = value => {
     console.log(`selected ${value}`);
     this.setState({ value: value });
-    this.props.fetchMemberBySprint(value);
+    this.props.fetchMemberBySprintRate(value);
   };
 
   handleBlur() {
@@ -75,29 +66,31 @@ class Rating extends Component {
   }
 
   render() {
-    console.log(this.props.scrum.memberBySprint);
+   
 
     const { value } = this.state;
     const desc = ["terrible", "bad", "normal", "good", "wonderful"];
-    const columns = [
+ 
+    const columns =this.props.scrum.memberRateBySprint.devs && this.props.scrum.memberRateBySprint.devs.length >0 &&
+    [
       {
         title: "Name",
-        dataIndex: "name",
-        key: "name",
-        render: text => <a href="javascript:;">{text}</a>
+        dataIndex:  this.props.scrum.memberRateBySprint.devs[0].DevTeamMember.firstName,
+        key:  this.props.scrum.memberRateBySprint.devs[0].DevTeamMember._id,
+        render: text => <a href="javascript:;">{ this.props.scrum.memberRateBySprint.devs[0].DevTeamMember.firstName}</a>
       },
       {
         title: "Rating",
-        key: "rating",
+        key:  this.props.scrum.memberRateBySprint.devs[0]._id,
         render: (text, record) => (
           <span>
             <Rate
               tooltips={desc}
               onChange={this.handleChangeRating.bind(value, record)}
-              value={record.rating}
+              value={record.note}
             />
-            {record.rating ? (
-              <span className="ant-rate-text">{desc[record.rating - 1]}</span>
+            {record.note ? (
+              <span className="ant-rate-text">{desc[record.note - 1]}</span>
             ) : (
               ""
             )}
@@ -127,9 +120,9 @@ class Rating extends Component {
               ))}
           </Select>
         </SelectContent>
-        {this.state.value && (
+        {this.props.scrum.memberRateBySprint.devs && this.props.scrum.memberRateBySprint.devs.length >0 && (
           <TableContent>
-            <Table columns={columns} dataSource={this.state.data} />
+            <Table columns={columns} dataSource={this.props.scrum.memberRateBySprint.devs} />
           </TableContent>
         )}
       </Container>
@@ -145,6 +138,6 @@ const mapStateToProps = state => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { fetchSprints, fetchMemberBySprint }
+    { fetchSprints, fetchMemberBySprintRate,updateRating }
   )(Rating)
 );

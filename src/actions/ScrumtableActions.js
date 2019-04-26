@@ -3,7 +3,11 @@ import {
   getColumns,
   getSprints,
   getMemberBySprint,
-  getMemberBySprintRate
+  getMemberBySprintRate,
+  editRating,
+  getMemberAbsence,
+  getMemberWorkDone,
+  editEtat
 } from "../api/ScrumTableApi";
 import {
   FETCH_USERSTORIES_REQUEST,
@@ -20,7 +24,20 @@ import {
   FETCH_MEMBERSPRINTS_FAILED,
   FETCH_MEMBERSPRINTSRATE_REQUEST,
   FETCH_MEMBERSPRINTSRATE_SUCCESS,
-  FETCH_MEMBERSPRINTSRATE_FAILED
+  FETCH_MEMBERSPRINTSRATE_FAILED,
+  UPDATE_RATEMEMBER_REQUEST,
+  UPDATE_RATEMEMBER_SUCCESS,
+  UPDATE_RATEMEMBER_FAILED,
+  RESET_STORE,
+  FETCH_ABSENCE_REQUEST,
+  FETCH_ABSENCE_SUCCESS,
+  FETCH_ABSENCE_FAILED,
+  FETCH_WORKDONE_REQUEST,
+  FETCH_WORKDONE_SUCCESS,
+  FETCH_WORKDONE_FAILED,
+  UPDATE_ETAT_REQUEST,
+  UPDATE_ETAT_SUCCESS,
+  UPDATE_ETAT_FAILED
 } from "./ActionTypes";
 
 export const fetchUserStories = () => {
@@ -75,6 +92,36 @@ export const fetchMemberBySprint = idSprint => {
     );
   };
 };
+export const fetchAbsence = (idUser,value) => {
+  return dispatch => {
+   
+    
+    dispatch({ type: FETCH_ABSENCE_REQUEST });
+    getMemberAbsence(idUser,value).then(
+      res => {
+        dispatch({ type: FETCH_ABSENCE_SUCCESS, payload: res.data });
+      },
+      err => {
+        dispatch({ type: FETCH_ABSENCE_FAILED, payload: err });
+      }
+    );
+  };
+};
+export const fetchMemberWorkDone = (idUser) => {
+  return dispatch => {
+   
+    
+    dispatch({ type: FETCH_WORKDONE_REQUEST });
+    getMemberWorkDone(idUser).then(
+      res => {
+        dispatch({ type: FETCH_WORKDONE_SUCCESS, payload: res.data });
+      },
+      err => {
+        dispatch({ type: FETCH_WORKDONE_FAILED, payload: err });
+      }
+    );
+  };
+};
 export const fetchMemberBySprintRate = idSprint1 => {
   return dispatch => {
     dispatch({ type: FETCH_MEMBERSPRINTSRATE_REQUEST });
@@ -86,5 +133,38 @@ export const fetchMemberBySprintRate = idSprint1 => {
         dispatch({ type: FETCH_MEMBERSPRINTSRATE_FAILED, payload: err });
       }
     );
+  };
+};
+export const updateRating = (values) => {
+  return dispatch => {
+    dispatch({ type: UPDATE_RATEMEMBER_REQUEST });
+    editRating(values).then(
+      res => {
+        dispatch({ type: UPDATE_RATEMEMBER_SUCCESS, payload: res.data });
+      },
+      err => {
+        dispatch({ type: UPDATE_RATEMEMBER_FAILED, payload: err });
+      }
+    );
+  };
+};
+export const updateEtat = (values,callback) => {
+  return dispatch => {
+    dispatch({ type: UPDATE_ETAT_REQUEST });
+    editEtat(values).then(
+      res => {
+      
+        dispatch({ type: UPDATE_ETAT_SUCCESS, payload: res.data });
+      },
+      err => {
+        dispatch({ type: UPDATE_ETAT_FAILED, payload: err });
+      }
+    );
+  };
+};
+export const restStore = () => {
+  return dispatch => {
+    dispatch({ type: RESET_STORE });
+;
   };
 };

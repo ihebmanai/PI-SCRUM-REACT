@@ -13,16 +13,35 @@ import {
   FETCH_MEMBERSPRINTS_FAILED,
   FETCH_MEMBERSPRINTSRATE_REQUEST,
   FETCH_MEMBERSPRINTSRATE_SUCCESS,
-  FETCH_MEMBERSPRINTSRATE_FAILED
+  FETCH_MEMBERSPRINTSRATE_FAILED,
+  UPDATE_RATEMEMBER_REQUEST,
+  UPDATE_RATEMEMBER_SUCCESS,
+  UPDATE_RATEMEMBER_FAILED,
+  RESET_STORE,
+  FETCH_ABSENCE_REQUEST,
+  FETCH_ABSENCE_SUCCESS,
+  FETCH_ABSENCE_FAILED,
+  FETCH_WORKDONE_REQUEST,
+  FETCH_WORKDONE_SUCCESS,
+  FETCH_WORKDONE_FAILED,
+  UPDATE_ETAT_REQUEST,
+  UPDATE_ETAT_SUCCESS,
+  UPDATE_ETAT_FAILED
 } from "../actions/ActionTypes";
 
 let INITIAL_STATE = {
+  res:[],
+  absence:"",
+  workDone:"",
   userStories: [],
   columns: [],
   sprints: [],
   memberBySprint: [],
+  memberRateBySprint: [],
   rates: [],
-  loading: false
+  loading: false,
+  loadingAbsence:false,
+  loadingUpdateEtat:false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -67,10 +86,50 @@ export default (state = INITIAL_STATE, action) => {
       newState = { ...state, loading: true };
       break;
     case FETCH_MEMBERSPRINTSRATE_SUCCESS:
-      newState = { ...state, loading: false, rates: action.payload };
+      newState = { ...state, loading: false, memberRateBySprint: action.payload };
       break;
     case FETCH_MEMBERSPRINTSRATE_FAILED:
-      newState = { ...state, rates: action.payload };
+      newState = { ...state, memberRateBySprint: action.payload };
+      break;
+      case UPDATE_RATEMEMBER_REQUEST:
+      newState = { ...state, loading: true };
+      break;
+    case UPDATE_RATEMEMBER_SUCCESS:
+      newState = { ...state, loading: false, res: action.payload };
+      break;
+      
+    case UPDATE_RATEMEMBER_FAILED:
+      newState = { ...state, res: action.payload };
+      break;
+      case FETCH_ABSENCE_REQUEST:
+      newState = { ...state, loadingAbsence: true };
+      break;
+    case FETCH_ABSENCE_SUCCESS:
+      newState = { ...state, loadingAbsence: false, absence: action.payload };
+      break;
+    case FETCH_ABSENCE_FAILED:
+      newState = { ...state, absence: action.payload };
+      break;
+      case FETCH_WORKDONE_REQUEST:
+      newState = { ...state, loadingAbsence: true };
+      break;
+    case FETCH_WORKDONE_SUCCESS:
+      newState = { ...state, loadingAbsence: false, workDone: action.payload };
+      break;
+    case FETCH_WORKDONE_FAILED:
+      newState = { ...state, workDone: action.payload };
+      break;
+      case UPDATE_ETAT_REQUEST:
+      newState = { ...state, loadingUpdateEtat: true };
+      break;
+    case UPDATE_ETAT_SUCCESS:
+      newState = { ...state, loadingUpdateEtat: false, res: action.payload };
+      break;
+    case UPDATE_ETAT_FAILED:
+      newState = { ...state, res: action.payload };
+      break;
+      case RESET_STORE:
+      newState = { ...state,memberRateBySprint:{},memberBySprint:{} };
       break;
     default:
       newState = state;
