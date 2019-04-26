@@ -22,7 +22,9 @@ export default class addformation extends Component {
 				attachments: this.state.attachments,
 				state: 'en cours'
 			})
-			.then(() => {});
+			.then(() => {
+				this.props.history.push('/cv');
+			});
 	};
 	render() {
 		return (

@@ -15,7 +15,6 @@ import {
 } from 'reactstrap';
 import UserStoryadd from './UserStoryadd';
 import axios from 'axios';
-import { DH_NOT_SUITABLE_GENERATOR } from 'constants';
 
 export default class BackLogDetail extends Component {
 	state = {
@@ -46,18 +45,19 @@ export default class BackLogDetail extends Component {
 		this.props.history.push('/wishlist');
 	};
 	foot() {
-		if (this.state.click == false)
-			return (
-				<Button onClick={this.addtowish} type="button" color="success">
-					<i className="fa fa-dot-circle-o" /> Add to Wish List
-				</Button>
-			);
-		else
-			return (
-				<Button onClick={this.chech} type="button" color="success">
-					<i className="fa fa-dot-circle-o" /> Check wish list
-				</Button>
-			);
+		if (this.state.devoloper == null)
+			if (this.state.click == false)
+				return (
+					<Button onClick={this.addtowish} type="button" color="success">
+						<i className="fa fa-dot-circle-o" /> Add to Wish List
+					</Button>
+				);
+			else
+				return (
+					<Button onClick={this.chech} type="button" color="success">
+						<i className="fa fa-dot-circle-o" /> Check wish list
+					</Button>
+				);
 	}
 	etat = (state) => {
 		if (state == 'to do') {

@@ -20,16 +20,23 @@ export default class BacklogSprint extends Component {
 		taskname: '',
 		descrip: '',
 		modal: false,
-		user: {}
+		user: {},
+		span1: true,
+		span2: true
 	};
 	constructor(props) {
 		super(props);
 		this.toggle = this.toggle.bind(this);
 	}
 	toggle() {
-		this.setState({
-			modal: !this.state.modal
-		});
+		if (this.state.taskname == '') {
+			this.setState({ span1: false });
+		} else if (this.state.descrip == '') {
+			this.setState({ span2: false });
+		} else
+			this.setState({
+				modal: !this.state.modal
+			});
 	}
 	affect = (e) => {
 		console.log('ok');
@@ -48,6 +55,9 @@ export default class BacklogSprint extends Component {
 	onInputChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
 		console.log(this.state);
+		this.setState({ span1: true });
+		this.setState({ span2: true });
+
 		axios
 			.post('http://localhost:3000/backlog_sprint/rec', {
 				desc: this.state.descrip
@@ -60,6 +70,7 @@ export default class BacklogSprint extends Component {
 	onFormSubmit = (e) => {
 		console.log('ok');
 		e.preventDefault();
+
 		axios
 			.post('http://localhost:3000/backlog_sprint/addTask/1', {
 				taskname: this.state.taskname,
@@ -71,6 +82,12 @@ export default class BacklogSprint extends Component {
 				this.props.history.push('/userstory/' + data.data[0]._id);
 			});
 	};
+	span1() {
+		if (this.state.span1 == false) return <span style={{ color: 'red' }}>required field* </span>;
+	}
+	span2() {
+		if (this.state.span2 == false) return <span style={{ color: 'red' }}>required field* </span>;
+	}
 
 	render() {
 		return (
@@ -83,6 +100,8 @@ export default class BacklogSprint extends Component {
 						<Form action="" method="post">
 							<FormGroup>
 								<Label htmlFor="nf-email">Task Name :</Label>
+								{this.span1()}
+
 								<Input
 									type="text"
 									id="nf-email"
@@ -93,6 +112,8 @@ export default class BacklogSprint extends Component {
 							</FormGroup>
 							<FormGroup>
 								<Label htmlFor="nf-password">Task General Description : </Label>
+								{this.span2()}
+
 								<Input
 									type="textarea"
 									name="descrip"

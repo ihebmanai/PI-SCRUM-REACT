@@ -5,12 +5,30 @@ import api from '../../api';
 import axios from 'axios';
 export default class TaskVote extends Component {
 	state = {
-		backlogs: []
+		backlogs: [],
+		wishlist: []
 	};
-	componentDidMount() {
-		axios.get('http://localhost:3000/backlog_sprint/unaffectedTasks/1').then(async (data) => {
+	list;
+	async componentDidMount() {
+		await axios.get('http://localhost:3000/backlog_sprint/unaffectedTasks/1').then(async (data) => {
 			this.setState({ backlogs: data.data });
+			this.list = data.data;
 		});
+		await axios
+			.get('http://localhost:3000/backlog_sprint/displayVote/5ca4c3ac3bfc1ab634ecab55')
+			.then(async (data) => {
+				this.setState({ wishlist: data.data });
+				console.log(this.state.wishlist);
+			});
+		this.state.backlogs.map((e, i) => {
+			this.state.wishlist.map((x) => {
+				if (e._id == x.task_id )  {
+					this.list.splice(i, 1);
+				}
+			});
+		});
+		console.log(this.list);
+		this.setState({ backlogs: this.list });
 	}
 	render() {
 		return (

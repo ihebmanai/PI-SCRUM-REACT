@@ -12,7 +12,7 @@ export default {
 		},
 		{
 			name: 'add Formation',
-			url: '/addformaion',
+			url: '/addformation',
 			icon: 'icon-speedometer'
 		},
 		{
@@ -20,11 +20,7 @@ export default {
 			url: '/wishlist',
 			icon: 'icon-speedometer'
 		},
-		{
-			name: 'Backlog Detail',
-			url: '/backlogdetail/:id',
-			icon: 'icon-speedometer'
-		},
+
 		{
 			name: 'Vote for tasks',
 			url: '/vote',
@@ -35,11 +31,7 @@ export default {
 			url: '/backlogdisplay',
 			icon: 'icon-speedometer'
 		},
-		{
-			name: 'User Story',
-			url: '/userstory',
-			icon: 'icon-speedometer'
-		},
+
 		{
 			name: 'Chart',
 			url: '/chart',

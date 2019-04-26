@@ -48,7 +48,7 @@ export default class UserStory extends Component {
 	};
 	onFormSubmit = (e) => {
 		console.log('ok');
-		e.preventDefault();
+		this.setState({ storyname: '', description: '' });
 		axios
 			.post('http://localhost:3000/backlog_sprint/addStory/' + this.props.match.params.id, {
 				estimation: this.state.estimation,

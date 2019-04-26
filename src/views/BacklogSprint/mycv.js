@@ -31,6 +31,7 @@ export default class mycv extends Component {
 					<CardBody>
 						<div id="accordion">
 							{this.state.fromations.map((a, i) => (
+                             
 								<Card className="mb-0">
 									<CardHeader id="headingTwo">
 										<Button
