@@ -133,7 +133,7 @@ class EvaluationKpi extends Component {
   };
   sumFinal() {
     const sumFinal = Number(
-      this.sum(this.props.scrum.absence.presence) +
+      this.sum(this.props.scrum.absence.presence) / 3 +
         this.sumWork(this.props.scrum.workDone.workDone) +
         this.sumRate(this.state.note) / 3
     ).toFixed(1);
