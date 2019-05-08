@@ -14,6 +14,7 @@ import "./Scrumtable.css";
 import initialdata from "../../api/InitialData";
 import Column from "./Column";
 
+
 const Container = styled.div`
   display: flex;
 `;
