@@ -1,7 +1,53 @@
 import React, { Component } from 'react';
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
 
+import axios from "axios";
 class AllIssues extends Component {
+  constructor(props) {
+    super(props);
+    this.onChange = this.onChange.bind(this);
+    this.state = {
+      scrumMasterName:'',
+      title : '',
+      type:'',
+      createdDate :'',
+      description :'',
+      status: '',
+      priority:'',
+      language:'',
+      issues:[],
+      project:''
+      
+    }
+  }
+  onChange = idx => e => {
+    const { name, value } = e.target;
+    const issues = [...this.state.issues];
+    issues[idx] = {
+      [name]: value
+    };
+    this.setState({
+      issues
+    });
+  }
+  componentDidMount(e) {
+    var self = this;
+    axios.get("http://localhost:3000/issue/project/5cd2e2618cfe9f3b20add864")
+      .then((response) => {
+        console.log(response.data);
+       
+        self.setState({
+          issues:response.data})
+        console.log(this.state.issues);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    
+
+      
+     
+  }
   render() {
     return (
       <div className="animated fadeIn">
@@ -15,53 +61,42 @@ class AllIssues extends Component {
                 <Table responsive striped>
                   <thead>
                   <tr>
-                    <th>Project Name</th>
-                    <th>Key</th>
+                    <th>Title</th>
+                    <th>Type</th>
                     <th>Description</th>
-                    <th>Starting Date</th>
-                    <th>End Date</th>
-                    <th>Product Owner</th>
-                    <th>Scrum Master</th>
+                    <th>Created Date</th>
+                    <th>Priority</th>
                     <th>Status</th>
+                    <th>Language</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Java Project</td>
-                    <td>JP</td>
-                    <td>New Java Project</td>
-                    <td>2019/01/01</td>
-                    <td>2019/05/01</td>
-                    <td>Mohamed ben Ali</td>
-                    <td>Mariem Ayari</td>
+                  {
+                      this.state.issues.map((issue,idx) => {
+                        var d = new Date(issue.createdDate);
+                        var formattedDate =  d.getFullYear()+"-" + (d.getMonth() + 1) + "-" + d.getDate() 
+                       var c="success"
+                        if ((issue.status) == "not solved")
+                        c="danger"
+
+                     return (
+                  <tr key={idx}>
+                    <td>{this.state.issues[idx].title}</td>
+                    <td>{this.state.issues[idx].type}</td>
+                    <td>{this.state.issues[idx].description}</td>
+                    <td>{formattedDate}</td>
+                    <td>{this.state.issues[idx].priority}</td>
+                    <td>{this.state.issues[idx].status}</td>
+                    <td>{this.state.issues[idx].language}</td>
                     <td>
-                      <Badge color="success">Active</Badge>
+                     
+                   
+                      <Badge color={c}>{issue.status}</Badge>
                     </td>
                   </tr>
-                  <tr>
-                    <td>Node Project</td>
-                    <td>NP</td>
-                    <td>New Node Project</td>
-                    <td>2019/02/01</td>
-                    <td>2019/06/01</td>
-                    <td>Ali</td>
-                    <td>Mariem Ben Salah</td>
-                    <td>
-                      <Badge color="secondary">Inactive</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Scrum Project</td>
-                    <td>SP</td>
-                    <td>Scrum Project Manager Platform</td>
-                    <td>2019/03/01</td>
-                    <td>2019/07/01</td>
-                    <td>Nabil Ben Ali</td>
-                    <td>Mariem Ayari</td>
-                    <td>
-                      <Badge color="warning">Pending</Badge>
-                    </td>
-                  </tr>
+                       )})
+                       }
+            
                   </tbody>
                 </Table>
                 <Pagination>

@@ -50,7 +50,7 @@ handleUpdateSpecificRow = (id,idx) => () => {
   this.setState({
     userStories: [...this.state.userStories]
   });
-  axios.put("http://localhost:3000/backlogProject/updateUserStory/5c96402f20a9240ec8f5c590/5cc242919d7ae11fe8722c84",{
+  axios.put("http://localhost:3000/backlogProject/updateUserStory/5cd2e7c48cfe9f3b20add870/5cd2e7c48cfe9f3b20add871",{
     priority: this.state.userStories[idx].priority})
   .then((response) => {
     
@@ -68,7 +68,7 @@ handleRemoveSpecificRow = (idx) => () => {
   this.setState({ userStories })
   console.log("aaaaaa"+idx)
   userStories.splice(idx, 1)
-  axios.put("http://localhost:3000/backlogProject/delete/5c96402f20a9240ec8f5c590/"+idx)
+  axios.put("http://localhost:3000/backlogProject/delete/5cd2e7c48cfe9f3b20add870/"+idx)
   .then((response) => {
     
     console.log("deleted");
@@ -83,7 +83,7 @@ handleRemoveSpecificRow = (idx) => () => {
 }
 componentDidMount(e) {
   var self = this;
-  axios.get("http://localhost:3000/project/getBacklog/5cc23892b8a2c809c0998415")
+  axios.get("http://localhost:3000/project/getBacklog/5cd2e2618cfe9f3b20add864")
     .then((response) => {
       console.log(response.data[0].userstories.length);
       self.setState({

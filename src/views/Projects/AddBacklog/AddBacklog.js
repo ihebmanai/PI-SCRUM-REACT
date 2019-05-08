@@ -44,7 +44,7 @@ class AddBacklog extends Component {
       p.preventDefault() 
       const data = this.state
       console.log(data)
-      axios.put('http://localhost:3000/backlogProject/addUserStory/5c96402f20a9240ec8f5c590',{
+      axios.put('http://localhost:3000/backlogProject/addUserStory/5cd2e7c48cfe9f3b20add870',{
         
         userStory: this.state.userstory,
         priority:this.state.p,
@@ -81,7 +81,7 @@ class AddBacklog extends Component {
 componentDidMount(e) {
 
   var self = this;
-  axios.get("http://localhost:3000/project/getBacklog/5cc23892b8a2c809c0998415")
+  axios.get("http://localhost:3000/project/getBacklog/5cd2e2618cfe9f3b20add864")
     .then((response) => {
       console.log(response.data[0]);
       self.setState({
