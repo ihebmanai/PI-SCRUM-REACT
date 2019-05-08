@@ -1,5 +1,16 @@
 import React from 'react';
 import DefaultLayout from './containers/DefaultLayout';
+import Meetings from './components/meetingComponents/meetings';
+import CreateMeetings from './components/meetingComponents/CreateMeeting';
+
+/////// ZZZ//////////////
+const ScrumTable = React.lazy(() => import("./pages/scrumTable/ScrumTable"));
+const Interview = React.lazy(() => import("./pages/interview/Interview"));
+const EvaluationKpi = React.lazy(() =>
+  import("./pages/evaluationKpi/EvaluationKpi")
+);
+const Rating = React.lazy(() => import("./pages/evaluationMembre/Rating"));
+///////////////////ZAYNEB/////////////////////
 
 const Breadcrumbs = React.lazy(() => import('./views/Base/Breadcrumbs'));
 const Cards = React.lazy(() => import('./views/Base/Cards'));
@@ -46,6 +57,22 @@ const Statistics = React.lazy(() => import('./views/Statistics/Statistics'));
 const AllReleases = React.lazy(() => import('./views/Projects/AllReleases'));
 const AllIssues = React.lazy(() => import('./views/Projects/AllIssues'));
 const AddIssue = React.lazy(() => import('./views/Projects/AddIssue'));
+const BacklogForum = React.lazy(() => import('./views/BacklogSprint/BacklogSprint'));
+const UserStory = React.lazy(() => import('./views/BacklogSprint/UserStory'));
+const Backlog = React.lazy(() => import('./views/BacklogSprint/Backlog'));
+const Vote = React.lazy(() => import('./views/BacklogSprint/TaskVote'));
+const BackLogDetail = React.lazy(() => import('./views/BacklogSprint/BackLogDetail'));
+const WishList = React.lazy(() => import('./views/BacklogSprint/MyWishList'));
+const Votes = React.lazy(() => import('./views/BacklogSprint/Votes'));
+const chart = React.lazy(() => import('./views/BacklogSprint/burnchart'));
+const addFormation = React.lazy(() => import('./views/BacklogSprint/addformation'));
+const cv = React.lazy(() => import('./views/BacklogSprint/mycv'));
+
+const meetings = React.lazy(() => import('./components/meetingComponents/meetings'));
+const createMeeting = React.lazy(() => import('./components/meetingComponents/CreateMeeting'));
+const invite = React.lazy(() => import('./components/meetingComponents/inviteUsers'));
+const passer = React.lazy(() => import('./components/ExamComponents/passerExams'));
+
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
@@ -98,7 +125,37 @@ const routes = [
   { path: '/statistics', exact: true, name: 'statistics', component: Statistics},
   { path: '/projects/AllReleases', exact: true, name: 'all releases', component: AllReleases},
   { path: '/projects/AllIssues', exact: true, name: 'all releases', component: AllIssues},
-  { path: '/projects/AddIssue', exact: true, name: 'all releases', component: AddIssue}
+  { path: '/projects/AddIssue', exact: true, name: 'all releases', component: AddIssue},
+  //////DHIA/////////
+  { path: '/users', exact: true,  name: 'Users', component: Users },
+  { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  { path: '/meetings', name: 'meetings', component: Meetings },
+  { path: '/createMeeting', name: 'create Meeting', component: createMeeting },
+  { path: '/Meeting/invite', name: 'invite users', component: invite },
+  { path: '/passerexam', name: 'invite users', component: passer },
+  { path: '/inviteMeeting/:id', name: 'invite users', component: invite },
+
+  //////IHEB//////
+  { path: '/addstory', exact: true, name: 'Add BackLog', component: BacklogForum },
+	{ path: '/userstory/:id', exact: true, name: 'Add BackLog', component: UserStory },
+	{ path: '/backlogdisplay', exact: true, name: 'Add BackLog', component: Backlog },
+	{ path: '/vote', exact: true, name: 'Vote', component: Vote },
+	{ path: '/BackLogDetail/:id', name: 'Backlog detail', component: BackLogDetail },
+	{ path: '/wishlist', exact: true, name: 'Wish List', component: WishList },
+	{ path: '/votes', exact: true, name: 'Votes', component: Votes },
+	{ path: '/chart', exact: true, name: 'chart', component: chart },
+	{ path: '/addformation', exact: true, name: 'chart', component: addFormation },
+	{ path: '/cv', exact: true, name: 'chart', component: cv },
+  ////ZAYNEB/////
+  {
+    path: "/scrumTable",
+    exact: true,
+    name: "ScrumTable",
+    component: ScrumTable
+  },
+  { path: "/interview", name: "Interview", component: Interview },
+  { path: "/rating", exact: true, name: "Rating", component: Rating },
+  { path: "/kpi-evaluation", name: "EvaluationKpi", component: EvaluationKpi }
   
 ];
 
