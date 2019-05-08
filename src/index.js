@@ -3,10 +3,25 @@ import 'react-app-polyfill/ie11'; // For IE 11 support
 import './polyfill'
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router } from "react-router";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import reducers from "./reducers/index";
+import thunk from "redux-thunk";
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import createBrowserHistory from "history/createBrowserHistory";
 
+const history = createBrowserHistory();
+const store = createStore(reducers, applyMiddleware(thunk));
+const app = (
+  <Provider store={store}>
+    <Router history={history}>
+      <App />
+    </Router>
+  </Provider>
+);
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

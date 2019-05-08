@@ -1,0 +1,11 @@
+.column-container {
+  margin: 8px;
+  border: 1px solid lightgrey;
+  border-radius: 2px;
+}
+h3 {
+  padding: 8px;
+}
+.task-list {
+  padding: 8px;
+}

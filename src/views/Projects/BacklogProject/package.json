@@ -1,0 +1,7 @@
+{
+    "name": "BacklogProject",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./BacklogProject.js"
+  }
+  

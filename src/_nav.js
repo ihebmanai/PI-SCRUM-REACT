@@ -5,13 +5,12 @@ export default {
       url: '/dashboard',
       icon: 'icon-speedometer',
       badge: {
-        variant: 'info',
-        text: 'NEW',
+        variant: 'info'
       },
     },
     {
       title: true,
-      name: 'Theme',
+      name: 'SCRUM Project Managment',
       wrapper: {            // optional wrapper object
         element: '',        // required valid HTML5 element tag
         attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
@@ -19,262 +18,213 @@ export default {
       class: ''             // optional class names space delimited list for title item ex: "text-center"
     },
     {
-      name: 'Colors',
+      name: 'Projects',
       url: '/theme/colors',
-      icon: 'icon-drop',
+      icon: 'icon-film',
+      children: [
+        {
+          name: 'Add project',
+          url: '/Projects/AddProject',
+          icon: 'icon-pencil',
+        },
+        {
+          name: 'Projects statistic',
+          url: '/Projects/CurrentProject',
+          icon: 'icon-clock',
+        },
+        {
+          name: 'All Projects',
+          url: '/Projects/ProjectList',
+          icon: 'icon-grid',
+        }]
+    },
+    {     name: 'Backlog',
+          url: '/Projects/BacklogProject',
+          icon: 'icon-list',
+      children: [
+        {
+          name: 'Add Backlog',
+          url:'/Projects/AddBacklog',
+          icon: 'icon-pencil',
+        },{
+          name: 'Update Backlog',
+          url: '/Projects/BacklogProject',
+          icon: 'icon-list',
+        }]
     },
     {
-      name: 'Typography',
-      url: '/theme/typography',
-      icon: 'icon-pencil',
+      name: 'Releases',
+      url: '/Projects/DragDrop',
+      icon: 'icon-layers',
+      children: [
+        {
+          name: 'Add new Release',
+          url:'/Projects/DragDrop',
+          icon: 'icon-clock',
+        },
+        {
+          name: 'Releases Planning',
+          url: '/Projects/AllReleases',
+          icon: 'icon-layers',
+        }]
+    },
+    {
+      name: 'Issues',
+      url: '/Projects/Issues',
+      icon: 'icon-layers',
+      children: [
+        {
+          name: 'Add issue',
+          url:'/Projects/AddIssue',
+          icon: 'icon-pencil',
+        },
+        {
+          name: 'All Issues',
+          url: '/Projects/AllIssues',
+          icon: 'icon-layers',
+        }]
+    },
+    {
+      name: 'Statistics',
+      url: '/Statistics',
+      icon: 'icon-graph',
+    },
+    {
+      name: "Scrum Table",
+      url: "/scrumTable",
+      icon: "icon-drop"
+    },
+    {
+      name: "Interview",
+      url: "/interview",
+      icon: "icon-pencil"
+    },
+
+    {
+      name: "Behavior Evaluation",
+      url: "/rating",
+      icon: "icon-puzzle"
+    },
+    {
+      name: " KPI Evaluation",
+      url: "/kpi-evaluation",
+      icon: "icon-cursor"
+    },
+    {
+			name: 'votes',
+			url: '/votes',
+			icon: 'icon-speedometer'
+		},
+		{
+			name: 'cv',
+			url: '/cv',
+			icon: 'icon-speedometer'
+		},
+		{
+			name: 'add Formation',
+			url: '/addformation',
+			icon: 'icon-speedometer'
+		},
+		{
+			name: 'Wish List',
+			url: '/wishlist',
+			icon: 'icon-speedometer'
+		},
+
+		{
+			name: 'Vote for tasks',
+			url: '/vote',
+			icon: 'icon-speedometer'
+		},
+		{
+			name: 'Backlog Sprint ',
+			url: '/backlogdisplay',
+			icon: 'icon-speedometer'
+		},
+
+		{
+			name: 'Chart',
+			url: '/chart',
+			icon: 'icon-speedometer'
+		},
+		{
+			name: 'Add Backlog Sprint',
+			url: '/addstory',
+			icon: 'icon-speedometer'
     },
     {
       title: true,
-      name: 'Components',
-      wrapper: {
-        element: '',
-        attributes: {},
+      name: 'meeting',
+      wrapper: {            // optional wrapper object
+        element: '',        // required valid HTML5 element tag
+        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
       },
+      class: ''             // optional class names space delimited list for title item ex: "text-center"
     },
     {
-      name: 'Base',
-      url: '/base',
-      icon: 'icon-puzzle',
-      children: [
-        {
-          name: 'Breadcrumbs',
-          url: '/base/breadcrumbs',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'Cards',
-          url: '/base/cards',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'Carousels',
-          url: '/base/carousels',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'Collapses',
-          url: '/base/collapses',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'Dropdowns',
-          url: '/base/dropdowns',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'Forms',
-          url: '/base/forms',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'Jumbotrons',
-          url: '/base/jumbotrons',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'List groups',
-          url: '/base/list-groups',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'Navs',
-          url: '/base/navs',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'Paginations',
-          url: '/base/paginations',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'Popovers',
-          url: '/base/popovers',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'Progress Bar',
-          url: '/base/progress-bar',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'Switches',
-          url: '/base/switches',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'Tables',
-          url: '/base/tables',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'Tabs',
-          url: '/base/tabs',
-          icon: 'icon-puzzle',
-        },
-        {
-          name: 'Tooltips',
-          url: '/base/tooltips',
-          icon: 'icon-puzzle',
-        },
-      ],
-    },
-    {
-      name: 'Buttons',
-      url: '/buttons',
+      name: 'Meetings',
+      url: '/meeting',
       icon: 'icon-cursor',
       children: [
         {
-          name: 'Buttons',
-          url: '/buttons/buttons',
+          name: 'List Meetings',
+          url: '/meeting',
           icon: 'icon-cursor',
         },
         {
-          name: 'Button dropdowns',
-          url: '/buttons/button-dropdowns',
+          name: 'add Meetings',
+          url: '/createMeeting',
           icon: 'icon-cursor',
         },
-        {
-          name: 'Button groups',
-          url: '/buttons/button-groups',
-          icon: 'icon-cursor',
-        },
-        {
-          name: 'Brand Buttons',
-          url: '/buttons/brand-buttons',
-          icon: 'icon-cursor',
-        },
+       
+        
+       
       ],
-    },
-    {
-      name: 'Charts',
-      url: '/charts',
-      icon: 'icon-pie-chart',
-    },
-    {
-      name: 'Icons',
-      url: '/icons',
-      icon: 'icon-star',
-      children: [
-        {
-          name: 'CoreUI Icons',
-          url: '/icons/coreui-icons',
-          icon: 'icon-star',
-          badge: {
-            variant: 'info',
-            text: 'NEW',
-          },
-        },
-        {
-          name: 'Flags',
-          url: '/icons/flags',
-          icon: 'icon-star',
-        },
-        {
-          name: 'Font Awesome',
-          url: '/icons/font-awesome',
-          icon: 'icon-star',
-          badge: {
-            variant: 'secondary',
-            text: '4.7',
-          },
-        },
-        {
-          name: 'Simple Line Icons',
-          url: '/icons/simple-line-icons',
-          icon: 'icon-star',
-        },
-      ],
-    },
-    {
-      name: 'Notifications',
-      url: '/notifications',
-      icon: 'icon-bell',
-      children: [
-        {
-          name: 'Alerts',
-          url: '/notifications/alerts',
-          icon: 'icon-bell',
-        },
-        {
-          name: 'Badges',
-          url: '/notifications/badges',
-          icon: 'icon-bell',
-        },
-        {
-          name: 'Modals',
-          url: '/notifications/modals',
-          icon: 'icon-bell',
-        },
-      ],
-    },
-    {
-      name: 'Widgets',
-      url: '/widgets',
-      icon: 'icon-calculator',
-      badge: {
-        variant: 'info',
-        text: 'NEW',
-      },
-    },
-    {
-      divider: true,
     },
     {
       title: true,
-      name: 'Extras',
+      name: 'Evaluation & exams',
+      wrapper: {            // optional wrapper object
+        element: '',        // required valid HTML5 element tag
+        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
+      },
+      class: ''             // optional class names space delimited list for title item ex: "text-center"
     },
     {
-      name: 'Pages',
-      url: '/pages',
-      icon: 'icon-star',
+      name: 'Exams',
+      url: '/exams',
+      icon: 'icon-pie-chart',
       children: [
         {
-          name: 'Login',
-          url: '/login',
-          icon: 'icon-star',
+          name: 'List Examens',
+          url: '/exams',
+          icon: 'icon-cursor',
         },
         {
-          name: 'Register',
-          url: '/register',
-          icon: 'icon-star',
+          name: 'add Exams',
+          url: '/createexam',
+          icon: 'icon-cursor',
         },
-        {
-          name: 'Error 404',
-          url: '/404',
-          icon: 'icon-star',
-        },
-        {
-          name: 'Error 500',
-          url: '/500',
-          icon: 'icon-star',
-        },
+        
+       
       ],
+      
     },
     {
-      name: 'Disabled',
-      url: '/dashboard',
-      icon: 'icon-ban',
-      attributes: { disabled: true },
-    },
-    {
-      name: 'Download CoreUI',
-      url: 'https://coreui.io/react/',
-      icon: 'icon-cloud-download',
-      class: 'mt-auto',
-      variant: 'success',
-      attributes: { target: '_blank', rel: "noopener" },
-    },
-    {
-      name: 'Try CoreUI PRO',
-      url: 'https://coreui.io/pro/react/',
-      icon: 'icon-layers',
-      variant: 'danger',
-      attributes: { target: '_blank', rel: "noopener" },
-    },
+      name: 'Exaluations',
+      url: '/evaluation',
+      icon: 'icon-pie-chart',
+      children: [
+        {
+          name: 'List Evaluations',
+          url: '/evaluation',
+          icon: 'icon-cursor',
+        },
+       
+      ],
+      
+    }
+    
+   
   ],
 };
