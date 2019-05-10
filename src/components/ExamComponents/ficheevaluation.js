@@ -77,7 +77,7 @@ class FicheEvaluation extends Component {
          this.setState({
           user : response.data
          })
-         console.log(this.state.evaluaions)
+         console.log(this.state.user)
          axios.get('http://localhost:3000/evaluations/avgType?type=java&&iduser='+this.state.user._id).then((response)=>{
             this.setState({
              Moyenne : response.data,

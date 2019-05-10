@@ -98,7 +98,7 @@ class CreateMeetings extends Component {
              {
                label: 'Yes',
                onClick: () =>{
-                 axios.get('http://localhost:3000/exams/inviteexam/'+id+'/'+this.props.match.params.id).then((response)=>{
+                 axios.get('http://localhost:3000/exams/inviteexam/5ccebbc46db2a922743dcf65/'+this.props.match.params.id).then((response)=>{
                // this.componentDiMount();
               console.log('invitation envoyé')
               console.log('iduser'+id)

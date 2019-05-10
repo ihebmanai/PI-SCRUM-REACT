@@ -7,8 +7,8 @@ class BacklogItem extends Component {
 		super(props);
 	}
 	componentDidMount() {
-		axios.get('http://localhost:3000/backlog_sprint/user/5ca4c3ac3bfc1ab634ecab55').then((data) => {
-			this.props.backlog.username = data.data.name;
+		axios.get('http://localhost:3000/backlog_sprint/user/5ccebbc46db2a922743dcf65').then((data) => {
+			this.props.backlog.username = data.data.firstName;
 			this.setState({ backlog: this.props.backlog });
 			console.log(this.state.backlog);
 		});

@@ -14,8 +14,8 @@ export default class Backlog extends Component {
 			this.setState({ backlogs: data.data });
 
 			await this.state.backlogs.map(async (back) => {
-				await axios.get('http://localhost:3000/backlog_sprint/user/5ca4c3ac3bfc1ab634ecab55').then((data) => {
-					back.username = data.data.name;
+				await axios.get('http://localhost:3000/backlog_sprint/user/5ccebbc46db2a922743dcf65').then((data) => {
+					back.username = data.data.firstName;
 				});
 			});
 			console.log(this.state.backlogs);
