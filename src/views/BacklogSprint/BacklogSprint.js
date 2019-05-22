@@ -138,7 +138,7 @@ export default class BacklogSprint extends Component {
 				<Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
 					<ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
 					<ModalBody>
-						our recommandation system recommande <b>{this.state.user.name}</b> for
+						our recommandation system recommande <b>{this.state.user.firstName}</b> for
 						<b>{this.state.taskname}</b>
 					</ModalBody>
 					<ModalFooter>
